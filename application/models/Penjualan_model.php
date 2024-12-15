@@ -27,7 +27,8 @@ class Penjualan_model extends CI_Model
 
     public function create_data($data)
     {
-        return $this->db->insert('penjualan', $data);
+        $this->db->insert('penjualan', $data);
+        return $this->db->insert_id(); // Mengembalikan ID dari data yang baru saja dimasukkan
     }
 
     public function update_data($conditions, $data)
@@ -37,16 +38,6 @@ class Penjualan_model extends CI_Model
             $this->db->where($conditions);
         }
 
-
-        // echo "<pre>";
-        // print_r($conditions);
-        // echo "<br>";
-
-        // print_r($data);
-        // echo "<br>";
-
-        // print_r($this->db->where($conditions));
-        // die;
         return $this->db->update('penjualan', $data);
     }
 

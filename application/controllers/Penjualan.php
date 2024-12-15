@@ -14,6 +14,7 @@ class Penjualan extends CI_Controller
         $this->load->model('Customer_model');
         $this->load->model('Penjualan_model');
         $this->load->model('Supir_model');
+        $this->load->model('Pembelian_customer_model');
         $this->load->model('Kat_penyewaan_model');
         // Memuat library form_validation
         $this->load->library('form_validation');
@@ -75,8 +76,19 @@ class Penjualan extends CI_Controller
                     'tanggal' => $this->input->post('tanggal'),
                 ];
 
-                // Menyimpan data penjualan
-                $this->Penjualan_model->create_data($data);
+                // Menyimpan data penjualan dan mendapatkan ID yang baru disimpan
+                $id_penjualan = $this->Penjualan_model->create_data($data);
+
+                $datacustomer = [
+                    'id_penjualan' => $id_penjualan, // Gunakan ID penjualan yang baru
+                    'id_customer' => $this->input->post('id_customer'),
+                    'jumlah_masuk' => $this->input->post('jumlah_keluar'),
+                    'jumlah_keluar' =>  0,
+                    'sisa' => $this->input->post('jumlah_keluar'),
+                ];
+
+                // Menyimpan data ke tabel History_pembelian_customer
+                $this->Pembelian_customer_model->create_data($datacustomer);
 
                 // Update stok barang di tabel barang
                 $barang_update = [

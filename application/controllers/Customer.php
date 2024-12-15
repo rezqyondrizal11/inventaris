@@ -10,6 +10,8 @@ class Customer extends CI_Controller
         $this->load->model('Jenis_customer_model');
         $this->load->model('User_model');
         $this->load->model('Kat_penyewaan_model');
+
+
         // Memuat library form_validation
         $this->load->library('form_validation');
         // Memuat library session

@@ -130,6 +130,16 @@ $datapenyewaan = $this->Kat_penyewaan_model->get_all_data(['name !=' => "Tidak T
 
                         <span>Permintaan</span></a>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="<?= base_url('pengembalian_barang') ?>">
+                        <i class="fas fa-truck fa-flip-horizontal"></i>
+
+
+
+
+
+                        <span>Pengembalian</span></a>
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
@@ -182,6 +192,12 @@ $datapenyewaan = $this->Kat_penyewaan_model->get_all_data(['name !=' => "Tidak T
                     <a class="nav-link" href="<?= base_url('permintaan') ?>">
                         <i class="fas fa-store"></i>
                         <span>permintaan</span></a>
+                </li>
+                <!-- Nav Item - Tables -->
+                <li class="nav-item active">
+                    <a class="nav-link" href="<?= base_url('pembelian_customer') ?>">
+                        <i class="fas fa-store"></i>
+                        <span>Pembelian</span></a>
                 </li>
             <?php endif; ?>
 

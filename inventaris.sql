@@ -37,11 +37,6 @@ CREATE TABLE `barang` (
 
 /*Data for the table `barang` */
 
-insert  into `barang`(`id`,`name`,`kode`,`kondisi`,`satuan`,`id_kat_barang`,`id_penyewaan`,`stok`,`jumlah_awal`,`jumlah_masuk`,`jumlah_keluar`) values 
-(3,'oksigen','BRG996','baik','buah',3,4,125,100,55,30),
-(4,'oksigen','BRG993','baik','tabung',3,5,25,50,0,25),
-(5,'selang','BRG273','baik','20',4,3,20,20,0,0);
-
 /*Table structure for table `customer` */
 
 DROP TABLE IF EXISTS `customer`;
@@ -137,9 +132,30 @@ CREATE TABLE `pembelian` (
 
 /*Data for the table `pembelian` */
 
-insert  into `pembelian`(`id`,`id_barang`,`id_supplier`,`jumlah_awal`,`jumlah_masuk`,`jumlah_keluar`,`stok`,`tanggal`) values 
-(6,3,3,100,15,0,115,'2024-12-12'),
-(7,3,3,115,20,0,135,'2024-12-12');
+/*Table structure for table `pembelian_customer` */
+
+DROP TABLE IF EXISTS `pembelian_customer`;
+
+CREATE TABLE `pembelian_customer` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id_penjualan` bigint(20) DEFAULT NULL,
+  `id_customer` bigint(20) DEFAULT NULL,
+  `id_supir` bigint(20) DEFAULT NULL,
+  `jumlah_masuk` bigint(20) DEFAULT NULL,
+  `jumlah_keluar` bigint(20) DEFAULT NULL,
+  `sisa` bigint(20) DEFAULT NULL,
+  `tanggal` date DEFAULT NULL,
+  `status` int(1) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_penjualan` (`id_penjualan`),
+  KEY `id_customer` (`id_customer`),
+  CONSTRAINT `pembelian_customer_ibfk_1` FOREIGN KEY (`id_penjualan`) REFERENCES `penjualan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `pembelian_customer_ibfk_2` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+/*Data for the table `pembelian_customer` */
 
 /*Table structure for table `penjemputan` */
 
@@ -166,9 +182,6 @@ CREATE TABLE `penjemputan` (
 
 /*Data for the table `penjemputan` */
 
-insert  into `penjemputan`(`id`,`id_barang`,`id_customer`,`id_cat_sewa`,`jumlah_awal`,`jumlah_masuk`,`jumlah_keluar`,`stok`,`tanggal`) values 
-(2,3,2,4,80,20,0,100,'2024-12-21');
-
 /*Table structure for table `penjualan` */
 
 DROP TABLE IF EXISTS `penjualan`;
@@ -188,12 +201,9 @@ CREATE TABLE `penjualan` (
   KEY `id_supir` (`id_supir`),
   CONSTRAINT `penjualan_ibfk_1` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `penjualan_ibfk_3` FOREIGN KEY (`id_supir`) REFERENCES `supir` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 /*Data for the table `penjualan` */
-
-insert  into `penjualan`(`id`,`id_barang`,`id_supir`,`id_customer`,`jumlah_awal`,`jumlah_masuk`,`jumlah_keluar`,`stok`,`tanggal`) values 
-(14,4,3,2,50,0,25,25,'2024-12-15');
 
 /*Table structure for table `penyewaan` */
 
@@ -225,10 +235,6 @@ CREATE TABLE `penyewaan` (
 
 /*Data for the table `penyewaan` */
 
-insert  into `penyewaan`(`id`,`id_barang`,`id_supir`,`id_customer`,`id_cat_sewa`,`jumlah_awal`,`jumlah_masuk`,`jumlah_keluar`,`stok`,`status`,`tanggal`,`tanggal_selesai`) values 
-(2,3,3,2,4,100,0,20,80,2,'2024-12-19','2024-12-21'),
-(3,3,3,2,4,135,0,10,125,1,'2024-12-15',NULL);
-
 /*Table structure for table `permintaan` */
 
 DROP TABLE IF EXISTS `permintaan`;
@@ -249,9 +255,6 @@ CREATE TABLE `permintaan` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `permintaan` */
-
-insert  into `permintaan`(`id`,`id_barang`,`id_customer`,`stok`,`tanggal`,`status`,`ket`) values 
-(4,4,2,25,'2024-12-15',2,'');
 
 /*Table structure for table `supir` */
 
