@@ -1,0 +1,11 @@
+# Blokir semua akses ke folder application
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} ^(.*)application(.*)$ [NC]
+    RewriteRule ^(.*)$ /index.php/$1 [L]
+</IfModule>
+
+# Blokir akses langsung ke file PHP
+<Files *.php>
+    Deny from all
+</Files>
