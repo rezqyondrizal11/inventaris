@@ -107,11 +107,21 @@ class Penyewaan extends CI_Controller
     public function edit($id)
     {
         $data = [
-            'barang' =>  $this->Barang_model->get_all_data(['stok !=' => 0, 'id_penyewaan' => $id]),
             'customer' => $this->Customer_model->get_all_data(),
             'supir' => $this->Supir_model->get_all_data(),
             'penyewaan' => $this->Penyewaan_model->get_data_by_id($id),
         ];
+
+        // Pastikan $data['penyewaan'] tidak null sebelum mengakses properti id_cat_sewa
+
+        $data['barang'] = $this->Barang_model->get_all_data([
+            'stok !=' => 0,
+            'id_penyewaan' => $data['penyewaan']['id_cat_sewa']
+        ]);
+
+        // Debugging untuk memeriksa data 'barang'
+
+
 
         if (!$data['penyewaan']) {
             $this->session->set_flashdata('error', 'Penyewaan not found!');
@@ -180,7 +190,7 @@ class Penyewaan extends CI_Controller
                 $this->update_related_data($id, $barang['id'], $stok);
 
                 $this->session->set_flashdata('success', 'Penyewaan updated successfully!');
-                redirect('penyewaan/index/' . $id);
+                redirect('penyewaan/index/' .  $data['penyewaan']['id_cat_sewa']);
             } else {
                 $data['errors'] = validation_errors();
             }
