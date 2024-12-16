@@ -76,8 +76,20 @@ class Proses_permintaan extends CI_Controller
                         'tanggal' => $permintaan['tanggal'],
                     ];
 
-                    // Menyimpan data penjualan
-                    $this->Penjualan_model->create_data($datap);
+
+                    $id_penjualan = $this->Penjualan_model->create_data($datap);
+
+                    $datacustomer = [
+                        'id_penjualan' => $id_penjualan, // Gunakan ID penjualan yang baru
+                        'id_customer' => $this->input->post('id_customer'),
+                        'jumlah_masuk' => $permintaan['stok'],
+                        'jumlah_keluar' =>  0,
+                        'sisa' => $permintaan['stok'],
+                        'status' => 1,
+                    ];
+
+                    // Menyimpan data ke tabel History_pembelian_customer
+                    $this->Pembelian_customer_model->create_data($datacustomer);
 
                     // Update stok barang di tabel barang
                     $barang_update = [
