@@ -82,7 +82,7 @@ class Proses_permintaan extends CI_Controller
 
                     $datacustomer = [
                         'id_penjualan' => $id_penjualan, // Gunakan ID penjualan yang baru
-                        'id_customer' => $this->input->post('id_customer'),
+                        'id_customer' => $permintaan['id_customer'],
                         'jumlah_masuk' => $permintaan['stok'],
                         'jumlah_keluar' =>  0,
                         'sisa' => $permintaan['stok'],
