@@ -67,8 +67,8 @@
                             <td><?= $no++ ?></td>
 
                             <td> <?= htmlspecialchars($barang['kode'], ENT_QUOTES, 'UTF-8') ?> / <?= htmlspecialchars($barangname, ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= htmlspecialchars($supirname, ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= htmlspecialchars($customername, ENT_QUOTES, 'UTF-8') ?></td>
+                            <td><?= htmlspecialchars($supirname, ENT_QUOTES, 'UTF-8') ?></td>
 
                             <td><?= htmlspecialchars($d['jumlah_awal'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= htmlspecialchars($d['jumlah_masuk'], ENT_QUOTES, 'UTF-8') ?></td>
