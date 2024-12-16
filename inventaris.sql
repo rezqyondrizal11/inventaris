@@ -33,9 +33,12 @@ CREATE TABLE `barang` (
   KEY `id_penyewaan` (`id_penyewaan`),
   CONSTRAINT `barang_ibfk_1` FOREIGN KEY (`id_kat_barang`) REFERENCES `kat_barang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `barang_ibfk_2` FOREIGN KEY (`id_penyewaan`) REFERENCES `kat_penyewaan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Data for the table `barang` */
+
+insert  into `barang`(`id`,`name`,`kode`,`kondisi`,`satuan`,`id_kat_barang`,`id_penyewaan`,`stok`,`jumlah_awal`,`jumlah_masuk`,`jumlah_keluar`) values 
+(6,'oksigen','BRG642','baik','tabung',3,4,136,100,36,10);
 
 /*Table structure for table `customer` */
 
@@ -53,14 +56,14 @@ CREATE TABLE `customer` (
   PRIMARY KEY (`id`),
   KEY `id_jc` (`id_jc`),
   KEY `id_user` (`id_user`),
-  CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`id_jc`) REFERENCES `jenis_customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `customer_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`id_jc`) REFERENCES `jenis_customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `customer` */
 
 insert  into `customer`(`id`,`kode`,`nama`,`email`,`telepon`,`alamat`,`id_jc`,`id_user`) values 
-(2,'CUS308','Rezqy ondrizal','rezqyondrizal@gmail.com','082391369677','jalan purus 2 no 13 rt003 rw 003',2,5);
+(2,'CUS308','Rezqy ondrizal','rezqyondrizal@gmail.com','082391369677','jalan purus 2 no 13 rt003 rw 003',2,5),
+(4,'CUS126','fani','fani@gmail.com','12312','jlads',2,0);
 
 /*Table structure for table `jenis_customer` */
 
@@ -128,9 +131,12 @@ CREATE TABLE `pembelian` (
   KEY `id_supplier` (`id_supplier`),
   CONSTRAINT `pembelian_ibfk_1` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `pembelian_ibfk_2` FOREIGN KEY (`id_supplier`) REFERENCES `supplier` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 /*Data for the table `pembelian` */
+
+insert  into `pembelian`(`id`,`id_barang`,`id_supplier`,`jumlah_awal`,`jumlah_masuk`,`jumlah_keluar`,`stok`,`tanggal`) values 
+(8,6,3,90,20,0,110,'2024-12-16');
 
 /*Table structure for table `pembelian_customer` */
 
@@ -140,47 +146,48 @@ CREATE TABLE `pembelian_customer` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `id_penjualan` bigint(20) DEFAULT NULL,
   `id_customer` bigint(20) DEFAULT NULL,
-  `id_supir` bigint(20) DEFAULT NULL,
+  `id_penyewaan` bigint(20) DEFAULT NULL,
   `jumlah_masuk` bigint(20) DEFAULT NULL,
   `jumlah_keluar` bigint(20) DEFAULT NULL,
   `sisa` bigint(20) DEFAULT NULL,
-  `tanggal` date DEFAULT NULL,
   `status` int(1) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_penjualan` (`id_penjualan`),
   KEY `id_customer` (`id_customer`),
+  KEY `id_penyewaan` (`id_penyewaan`),
   CONSTRAINT `pembelian_customer_ibfk_1` FOREIGN KEY (`id_penjualan`) REFERENCES `penjualan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `pembelian_customer_ibfk_2` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  CONSTRAINT `pembelian_customer_ibfk_2` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `pembelian_customer_ibfk_3` FOREIGN KEY (`id_penyewaan`) REFERENCES `penyewaan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Data for the table `pembelian_customer` */
 
-/*Table structure for table `penjemputan` */
+insert  into `pembelian_customer`(`id`,`id_penjualan`,`id_customer`,`id_penyewaan`,`jumlah_masuk`,`jumlah_keluar`,`sisa`,`status`) values 
+(6,19,2,NULL,10,6,4,3);
 
-DROP TABLE IF EXISTS `penjemputan`;
+/*Table structure for table `pengembalian_barang` */
 
-CREATE TABLE `penjemputan` (
+DROP TABLE IF EXISTS `pengembalian_barang`;
+
+CREATE TABLE `pengembalian_barang` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id_pc` bigint(20) NOT NULL,
   `id_barang` bigint(20) DEFAULT NULL,
   `id_customer` bigint(20) DEFAULT NULL,
-  `id_cat_sewa` bigint(20) DEFAULT NULL,
-  `jumlah_awal` bigint(20) DEFAULT NULL,
-  `jumlah_masuk` bigint(20) DEFAULT NULL,
-  `jumlah_keluar` bigint(20) DEFAULT NULL,
-  `stok` bigint(20) DEFAULT NULL,
+  `stok_dikembalikan` bigint(20) DEFAULT NULL,
+  `sisa` bigint(20) DEFAULT NULL,
+  `id_supir` bigint(20) DEFAULT NULL,
   `tanggal` date DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_barang` (`id_barang`),
-  KEY `id_customer` (`id_customer`),
-  KEY `id_cat_sewa` (`id_cat_sewa`),
-  CONSTRAINT `penjemputan_ibfk_1` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `penjemputan_ibfk_2` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `penjemputan_ibfk_3` FOREIGN KEY (`id_cat_sewa`) REFERENCES `kat_penyewaan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `status` int(1) DEFAULT NULL,
+  `volume` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
-/*Data for the table `penjemputan` */
+/*Data for the table `pengembalian_barang` */
+
+insert  into `pengembalian_barang`(`id`,`id_pc`,`id_barang`,`id_customer`,`stok_dikembalikan`,`sisa`,`id_supir`,`tanggal`,`status`,`volume`) values 
+(7,0,6,4,10,0,NULL,'2024-12-16',2,'Kosong'),
+(8,6,NULL,2,6,4,3,'2024-12-16',2,'Kosong');
 
 /*Table structure for table `penjualan` */
 
@@ -201,9 +208,12 @@ CREATE TABLE `penjualan` (
   KEY `id_supir` (`id_supir`),
   CONSTRAINT `penjualan_ibfk_1` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `penjualan_ibfk_3` FOREIGN KEY (`id_supir`) REFERENCES `supir` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 /*Data for the table `penjualan` */
+
+insert  into `penjualan`(`id`,`id_barang`,`id_supir`,`id_customer`,`jumlah_awal`,`jumlah_masuk`,`jumlah_keluar`,`stok`,`tanggal`) values 
+(19,6,3,2,100,0,10,90,'2024-12-16');
 
 /*Table structure for table `penyewaan` */
 
@@ -231,7 +241,7 @@ CREATE TABLE `penyewaan` (
   CONSTRAINT `penyewaan_ibfk_2` FOREIGN KEY (`id_supir`) REFERENCES `supir` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `penyewaan_ibfk_3` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `penyewaan_ibfk_4` FOREIGN KEY (`id_cat_sewa`) REFERENCES `kat_penyewaan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Data for the table `penyewaan` */
 
