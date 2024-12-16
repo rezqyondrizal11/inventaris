@@ -35,7 +35,8 @@ class penyewaan_model extends CI_Model
 
     public function create_data($data)
     {
-        return $this->db->insert('penyewaan', $data);
+        $this->db->insert('penyewaan', $data);
+        return $this->db->insert_id();
     }
 
     public function update_data($conditions, $data)

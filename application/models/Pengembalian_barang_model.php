@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Pembelian_customer_model extends CI_Model
+class Pengembalian_barang_model extends CI_Model
 {
     public function get_all_data($conditions = [])
     {
@@ -9,7 +9,7 @@ class Pembelian_customer_model extends CI_Model
         if (!empty($conditions)) {
             $this->db->where($conditions);
         }
-        return $this->db->get('pembelian_customer')->result_array();
+        return $this->db->get('pengembalian_barang')->result_array();
     }
     public function get_filtered_data($conditions = [], $start_date, $end_date)
     {
@@ -21,7 +21,7 @@ class Pembelian_customer_model extends CI_Model
         $this->db->where('tanggal >=', $start_date);
         $this->db->where('tanggal <=', $end_date);
         $this->db->order_by('id', 'DESC'); // Add order for consistency
-        return $this->db->get('pembelian_customer')->result_array();
+        return $this->db->get('pengembalian_barang')->result_array();
     }
     public function get_data_by_id($id)
     {
@@ -31,7 +31,7 @@ class Pembelian_customer_model extends CI_Model
 
     public function create_data($data)
     {
-        return $this->db->insert('pembelian_customer', $data);
+        return $this->db->insert('pengembalian_barang', $data);
     }
 
     public function update_data($conditions, $data)
@@ -40,7 +40,7 @@ class Pembelian_customer_model extends CI_Model
         if (!empty($conditions)) {
             $this->db->where($conditions);
         }
-        return $this->db->update('pembelian_customer', $data);
+        return $this->db->update('pengembalian_barang', $data);
     }
 
     public function delete_data($conditions)
@@ -49,6 +49,6 @@ class Pembelian_customer_model extends CI_Model
         if (!empty($conditions)) {
             $this->db->where($conditions);
         }
-        return $this->db->delete('pembelian_customer');
+        return $this->db->delete('pengembalian_barang');
     }
 }

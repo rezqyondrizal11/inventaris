@@ -9,7 +9,11 @@ class Pembelian_customer extends CI_Controller
         $this->load->model('Kat_penyewaan_model');
         $this->load->model('Penjualan_model');
         $this->load->model('Barang_model');
+        $this->load->model('penyewaan_model');
+        $this->load->model('Customer_model');
+        $this->load->model('Supir_model');
 
+        $this->load->model('Pengembalian_barang_model');
         $this->load->model('Pembelian_customer_model');
         // Memuat library form_validation
         $this->load->library('form_validation');
@@ -23,7 +27,15 @@ class Pembelian_customer extends CI_Controller
 
     public function index()
     {
-        $data['data'] = $this->Pembelian_customer_model->get_all_data();
+
+        $customer = $this->Customer_model->get_data_by_iduser($this->session->userdata('user_id'));
+
+        // Memanggil fungsi dari model
+        $conditions2 = array(
+            'id_customer' => $customer['id'] // Mengambil ID customer dari objek $customer
+        );
+        $data['data'] = $this->Pembelian_customer_model->get_all_data($conditions2); // Kondisi langsung
+
         $this->load->view('pembelian_customer/index', $data);
     }
 
@@ -33,9 +45,15 @@ class Pembelian_customer extends CI_Controller
         $data = [];
 
 
-        $data['pengembalian'] = $this->Pembelian_customer_model->get_data_by_id($id);
+        $data['pembelian'] = $this->Pembelian_customer_model->get_data_by_id($id);
 
-        if (!$data['pengembalian']) {
+        $conditions2 = array(
+            'id_pc' =>  $data['pembelian']['id'] // Mengambil ID customer dari objek $customer
+        );
+        $data['pengembalian'] = $this->Pengembalian_barang_model->get_all_data($conditions2);;
+
+
+        if (!$data['pembelian']) {
             $this->session->set_flashdata('error', 'Barang not found!');
             redirect('pembelian_customer');
         }
@@ -48,14 +66,27 @@ class Pembelian_customer extends CI_Controller
 
 
             if ($this->form_validation->run()) {
-                $update_data = [
-                    'jumlah_keluar' => $this->input->post('jumlah_keluar'),
+
+                $penjualan = $this->Penjualan_model->get_data_by_id($pembelian['id_penjualan']);
+                if ($penjualan) {
+                    $barang = $this->Barang_model->get_data_by_id($penjualan['id_barang']);
+                } else {
+                    $penyewaan = $this->penyewaan_model->get_data_by_id($pembelian['id_penyewaan']);
+
+                    $barang = $this->Barang_model->get_data_by_id($penyewaan['id_barang']);
+                }
+
+                $update_datap = [
+                    'id_pc' => $id,
+                    'stok_dikembalikan' => $this->input->post('jumlah_keluar'),
+                    'sisa' => $data['pembelian']['sisa'] - $this->input->post('jumlah_keluar'),
+                    'id_barang' => $barang['id'],
+                    'id_customer' => $data['pembelian']['id_customer'],
                     'status' => 1,
-                    'sisa' => $data['pengembalian']['sisa'] - $this->input->post('jumlah_keluar'),
                 ];
 
-                $id = ['id' => $id];
-                $this->Pembelian_customer_model->update_data($id, $update_data);
+                $this->Pengembalian_barang_model->create_data($update_datap);
+
 
                 $this->session->set_flashdata('success', 'Pengembalian Barang updated successfully!');
                 redirect('pembelian_customer');

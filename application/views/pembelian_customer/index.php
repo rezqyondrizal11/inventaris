@@ -1,10 +1,10 @@
 <?php $this->load->view('layout/header'); ?>
 <div class="container-fluid">
-    <h1 class="h3 mb-2 text-gray-800">Pembelian Barang</h1>
+    <h1 class="h3 mb-2 text-gray-800">Pembelian / Penyewaan Barang</h1>
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Pembelian Barang List</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Pembelian / Penyewaan Barang List</h6>
         </div>
         <div class="card-body">
             <?php if ($this->session->flashdata('success')): ?>
@@ -30,9 +30,16 @@
                     $no = 1;
                     foreach ($data as $d):
                         $penjualan = $this->Penjualan_model->get_data_by_id($d['id_penjualan']);
+                        if ($penjualan) {
+                            $barang = $this->Barang_model->get_data_by_id($penjualan['id_barang']);
+                            $barangname = $barang ? $barang['name'] : 'Unknown';
+                        } else {
+                            $penyewaan = $this->penyewaan_model->get_data_by_id($d['id_penyewaan']);
 
-                        $barang = $this->Barang_model->get_data_by_id($penjualan['id_barang']);
-                        $barangname = $barang ? $barang['name'] : 'Unknown';
+                            $barang = $this->Barang_model->get_data_by_id($penyewaan['id_barang']);
+                            $barangname = $barang ? $barang['name'] : 'Unknown';
+                        }
+
                     ?>
                         <tr>
                             <td><?= $no++ ?></td>
@@ -45,23 +52,20 @@
                             <td>
                                 <?php if ($d['status'] == 1) {
 
-                                    echo 'Diproses';
+                                    echo 'Dipakai';
                                 } elseif ($d['status'] == 2) {
 
                                     echo 'Barang Dikembalian';
                                 } elseif ($d['status'] == 3) {
 
                                     echo 'Masih ada Sisa';
-                                } elseif ($d['status'] == 0) {
-
-                                    echo 'Pengembalian Ditolak';
                                 }
                                 ?>
                             </td>
-                            <td> <?php if (!$d['status'] || $d['status'] == 0) { ?>
+                            <td>
 
-                                    <a href="<?= site_url('pembelian_customer/pengembalian/' . $d['id']) ?>" class="btn btn-warning btn-sm">Pengembalian</a>
-                                <?php } ?>
+                                <a href="<?= site_url('pembelian_customer/pengembalian/' . $d['id']) ?>" class="btn btn-warning btn-sm">Pengembalian</a>
+
                             </td>
                         </tr>
                     <?php endforeach; ?>

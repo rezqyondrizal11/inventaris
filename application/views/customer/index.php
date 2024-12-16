@@ -35,7 +35,7 @@
                         $jenis = $this->Jenis_customer_model->get_data_by_id($d['id_jc']);
                         $jenis_name = $jenis ? $jenis['name'] : 'Unknown';
                         $user = $this->User_model->get_user_by_id($d['id_user']);
-                        $nameuser = $user ? $user['email'] : 'Unknown';
+                        $nameuser = $user ? $user['email'] : '';
                     ?>
                         <tr>
                             <td><?= $no++ ?></td>

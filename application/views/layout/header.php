@@ -160,26 +160,7 @@ $datapenyewaan = $this->Kat_penyewaan_model->get_all_data(['name !=' => "Tidak T
                         </div>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                        aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-truck fa-flip-horizontal"></i>
 
-
-
-                        <span>Penjemputan</span>
-                    </a>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Details:</h6>
-                            <?php foreach ($datapenyewaan as $key => $data) { ?>
-                                <a class="collapse-item" href="<?= base_url('penjemputan/index/' .  $data['id']) ?>"><?= $data['name'] ?></a>
-
-                            <?php   } ?>
-
-                        </div>
-                    </div>
-                </li>
             <?php endif; ?>
 
             <?php if ($this->session->userdata('role') == 'customer'): ?>
@@ -224,10 +205,6 @@ $datapenyewaan = $this->Kat_penyewaan_model->get_all_data(['name !=' => "Tidak T
                 <li class="nav-item active">
                     <a class="nav-link" href="<?= base_url('permintaan_pemimpin') ?>">
                         <i class="fas fa-inbox"></i>
-
-
-
-
                         <span>Permintaan</span></a>
                 </li>
 
@@ -250,26 +227,7 @@ $datapenyewaan = $this->Kat_penyewaan_model->get_all_data(['name !=' => "Tidak T
                         </div>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                        aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-truck fa-flip-horizontal"></i>
 
-
-
-                        <span>Penjemputan</span>
-                    </a>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Details:</h6>
-                            <?php foreach ($datapenyewaan as $key => $data) { ?>
-                                <a class="collapse-item" href="<?= base_url('penjemputan_pemimpin/index/' .  $data['id']) ?>"><?= $data['name'] ?></a>
-
-                            <?php   } ?>
-
-                        </div>
-                    </div>
-                </li>
             <?php endif; ?>
 
             <!-- Divider -->

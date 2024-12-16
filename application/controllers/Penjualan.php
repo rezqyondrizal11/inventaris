@@ -85,6 +85,7 @@ class Penjualan extends CI_Controller
                     'jumlah_masuk' => $this->input->post('jumlah_keluar'),
                     'jumlah_keluar' =>  0,
                     'sisa' => $this->input->post('jumlah_keluar'),
+                    'status' => 1,
                 ];
 
                 // Menyimpan data ke tabel History_pembelian_customer

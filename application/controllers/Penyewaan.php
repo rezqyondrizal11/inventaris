@@ -15,6 +15,7 @@ class Penyewaan extends CI_Controller
         $this->load->model('Penyewaan_model');
         $this->load->model('Supir_model');
         $this->load->model('Kat_penyewaan_model');
+        $this->load->model('Pembelian_customer_model');
         // Memuat library form_validation
         $this->load->library('form_validation');
         // Memuat library session
@@ -80,8 +81,21 @@ class Penyewaan extends CI_Controller
                     'tanggal' => $this->input->post('tanggal'),
                 ];
 
-                // Menyimpan data Penyewaan
-                $this->Penyewaan_model->create_data($data);
+
+                // Menyimpan data penjualan dan mendapatkan ID yang baru disimpan
+                $id_penyewaan = $this->Penyewaan_model->create_data($data);
+
+                $datacustomer = [
+                    'id_penyewaan' => $id_penyewaan, // Gunakan ID penjualan yang baru
+                    'id_customer' => $this->input->post('id_customer'),
+                    'jumlah_masuk' => $this->input->post('jumlah_keluar'),
+                    'jumlah_keluar' =>  0,
+                    'sisa' => $this->input->post('jumlah_keluar'),
+                    'status' => 1,
+                ];
+
+                // Menyimpan data ke tabel History_pembelian_customer
+                $this->Pembelian_customer_model->create_data($datacustomer);
 
                 // Update stok barang di tabel barang
                 $barang_update = [

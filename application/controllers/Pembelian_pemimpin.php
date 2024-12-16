@@ -14,6 +14,8 @@ class Pembelian_pemimpin extends CI_Controller
         $this->load->model('Pembelian_model');
         $this->load->model('Supplier_model');
         $this->load->model('Kat_penyewaan_model');
+        $this->load->model('penyewaan_model');
+
         // Memuat library form_validation
         $this->load->library('form_validation');
         // Memuat library session
