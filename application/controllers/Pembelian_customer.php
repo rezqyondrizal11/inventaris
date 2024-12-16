@@ -72,7 +72,6 @@ class Pembelian_customer extends CI_Controller
                     $barang = $this->Barang_model->get_data_by_id($penjualan['id_barang']);
                 } else {
                     $penyewaan = $this->penyewaan_model->get_data_by_id($data['pengembalian']['id_penyewaan']);
-
                     $barang = $this->Barang_model->get_data_by_id($penyewaan['id_barang']);
                 }
 

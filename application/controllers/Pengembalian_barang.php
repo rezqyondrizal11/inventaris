@@ -103,7 +103,7 @@ class Pengembalian_barang extends CI_Controller
 
                     $barang = $this->Barang_model->get_data_by_id($penjualan['id_barang']);
                     $barangmasuk = $data['pengembalian']['stok_dikembalikan'] + $barang['jumlah_masuk'];
-                    $stok_baru = $barang['jumlah_awal'] +  $barangmasuk - $barang['jumla_keluar'];
+                    $stok_baru = $barang['jumlah_awal'] +  $barangmasuk - $barang['jumlah_keluar'];
 
 
                     $barang_update = [
