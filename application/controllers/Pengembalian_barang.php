@@ -82,13 +82,15 @@ class Pengembalian_barang extends CI_Controller
 
                 $this->Pengembalian_barang_model->update_data(['id' => $id], $update_data);
                 if ($update_data['status'] == 2) {
+                    $pembelian = $this->Pembelian_customer_model->get_data_by_id($data['pengembalian']['id_pc']);
+
                     if ($data['pengembalian']['sisa'] != 0) {
                         $status = 3;
                     } else {
                         $status = 2;
                     }
                     $update_data = [
-                        'jumlah_keluar' => $data['pengembalian']['stok_dikembalikan'],
+                        'jumlah_keluar' => $pembelian['jumlah_keluar'] + $data['pengembalian']['stok_dikembalikan'],
                         'status' =>   $status,
                         'sisa' => $data['pengembalian']['sisa'],
                     ];
@@ -97,7 +99,6 @@ class Pengembalian_barang extends CI_Controller
 
                     $this->Pembelian_customer_model->update_data($ids, $update_data);
 
-                    $pembelian = $this->Pembelian_customer_model->get_data_by_id($data['pengembalian']['id_pc']);
                     $penjualan = $this->Penjualan_model->get_data_by_id($pembelian['id_penjualan']);
 
                     $barang = $this->Barang_model->get_data_by_id($penjualan['id_barang']);
