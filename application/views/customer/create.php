@@ -48,7 +48,7 @@
                 </div>
                 <div class="form-group">
                     <label for="user">User Login</label>
-                    <select class="form-control" id="user" name="id_user" required>
+                    <select class="form-control" id="user" name="id_user">
                         <option value="" disabled selected>Pilih Salah Satu</option> <!-- Disabled option -->
                         <?php foreach ($user as $j): ?>
                             <option value="<?= $j['id'] ?>"><?= $j['email'] ?></option>

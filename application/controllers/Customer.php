@@ -42,7 +42,7 @@ class Customer extends CI_Controller
             $this->form_validation->set_rules('telepon', 'Telepon', 'required|trim');
             $this->form_validation->set_rules('alamat', 'Alamat', 'required|trim');
             $this->form_validation->set_rules('id_jc', 'Jenis Customer', 'required|trim');
-            $this->form_validation->set_rules('id_user', 'User', 'required|trim');
+            $this->form_validation->set_rules('id_user', 'User', 'trim');
 
             if ($this->form_validation->run()) {
                 // Siapkan data untuk pembuatan 
@@ -95,7 +95,7 @@ class Customer extends CI_Controller
             $this->form_validation->set_rules('telepon', 'Telepon', 'required|trim');
             $this->form_validation->set_rules('alamat', 'Alamat', 'required|trim');
             $this->form_validation->set_rules('id_jc', 'Jenis Customer', 'required|trim');
-            $this->form_validation->set_rules('id_user', 'User', 'required|trim');
+            $this->form_validation->set_rules('id_user', 'User', 'trim');
             if ($this->form_validation->run()) {
                 // Siapkan data untuk pembaruan
                 $update_data = [
