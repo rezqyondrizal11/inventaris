@@ -49,7 +49,7 @@
                 <div class="form-group">
                     <label for="user">User Login</label>
                     <select class="form-control" id="user" name="id_user">
-                        <option value="" disabled selected>Pilih Salah Satu</option> <!-- Disabled option -->
+                        <option value="" selected>Pilih Salah Satu</option> <!-- Disabled option -->
                         <?php foreach ($user as $j): ?>
                             <option value="<?= $j['id'] ?>"><?= $j['email'] ?></option>
                         <?php endforeach; ?>
