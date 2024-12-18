@@ -28,43 +28,43 @@ class Permintaan extends CI_Controller
 
     public function create()
     {
-
         $data['barang'] = $this->Barang_model->get_all_data(['stok !=' => 0]);
-        // Jika form disubmit
-        if ($this->input->post()) {
-            // Validasi input
-            $this->form_validation->set_rules('id_barang', 'Barang', 'required|trim');
 
-            $this->form_validation->set_rules('stok', 'Stok', 'required|trim');
+        if ($this->input->post()) {
+            $permintaan = $this->input->post('permintaan');
+
+
 
             $customer = $this->Customer_model->get_data_by_iduser($this->session->userdata('user_id'));
-            if ($this->form_validation->run()) {
-                // Siapkan data untuk pembuatan 
-                $data = [
-                    'id_barang' => $this->input->post('id_barang'),
-                    'id_customer' => $customer['id'],
 
-                    'stok' => $this->input->post('stok'),
+            foreach ($permintaan as $item) {
+                $this->form_validation->set_rules("permintaan[{$item['id_barang']}][id_barang]", 'Barang', 'required|trim');
+                $this->form_validation->set_rules("permintaan[{$item['stok']}][stok]", 'Stok', 'required|trim|integer');
+
+                // if (!$this->form_validation->run()) {
+                //     $data['errors'] = validation_errors();
+                //     break;
+                // }
+
+                $dataToInsert = [
+                    'id_barang' => $item['id_barang'],
+                    'id_customer' => $customer['id'],
+                    'stok' => $item['stok'],
                     'tanggal' => date('Y-m-d'),
                     'status' => 1,
-                    'ket' => $this->input->post('ket'),
                 ];
 
-                // Panggil model untuk membuat 
-                $this->Permintaan_model->create_data($data);
-
-                // Set flash message untuk notifikasi sukses
-                $this->session->set_flashdata('success', 'Permintaan created successfully!');
-                redirect('permintaan');
-            } else {
-                // Jika validasi gagal, kirimkan pesan error ke view
-                $data['errors'] = validation_errors();
+                $this->Permintaan_model->create_data($dataToInsert);
             }
+
+
+            $this->session->set_flashdata('success', 'Permintaan created successfully!');
+            redirect('permintaan');
         }
 
-        // Load view
         $this->load->view('permintaan/create', $data);
     }
+
 
 
     public function edit($id)

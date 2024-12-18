@@ -67,11 +67,11 @@ class Pembelian_customer extends CI_Controller
 
             if ($this->form_validation->run()) {
 
-                $penjualan = $this->Penjualan_model->get_data_by_id($data['pengembalian']['id_penjualan']);
+                $penjualan = $this->Penjualan_model->get_data_by_id($data['pembelian']['id_penjualan']);
                 if ($penjualan) {
                     $barang = $this->Barang_model->get_data_by_id($penjualan['id_barang']);
                 } else {
-                    $penyewaan = $this->penyewaan_model->get_data_by_id($data['pengembalian']['id_penyewaan']);
+                    $penyewaan = $this->penyewaan_model->get_data_by_id($data['pembelian']['id_penyewaan']);
                     $barang = $this->Barang_model->get_data_by_id($penyewaan['id_barang']);
                 }
 
