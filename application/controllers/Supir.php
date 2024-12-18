@@ -9,6 +9,7 @@ class Supir extends CI_Controller
         $this->load->model('Supir_model');
         $this->load->model('Kat_penyewaan_model');
         // Memuat library form_validation
+        $this->load->model('Notifikasi_model');
         $this->load->library('form_validation');
         // Memuat library session
         $this->load->library('session');

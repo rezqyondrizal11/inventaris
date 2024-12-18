@@ -7,6 +7,7 @@ class Kategori_barang extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Kat_barang_model');
+        $this->load->model('Notifikasi_model');
         $this->load->model('Kat_penyewaan_model');
         // Memuat library form_validation
         $this->load->library('form_validation');

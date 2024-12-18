@@ -14,6 +14,7 @@ class Penjemputan extends CI_Controller
         $this->load->model('Customer_model');
         $this->load->model('Penjemputan_model');
         $this->load->model('Supir_model');
+        $this->load->model('Notifikasi_model');
         $this->load->model('Kat_penyewaan_model');
         // Memuat library form_validation
         $this->load->library('form_validation');

@@ -9,6 +9,7 @@ class Permintaan_pemimpin extends CI_Controller
         $this->load->model('Permintaan_model');
         $this->load->model('Kat_penyewaan_model');
         $this->load->model('Barang_model');
+        $this->load->model('Notifikasi_model');
         $this->load->model('Customer_model');
         // Memuat library form_validation
         $this->load->library('form_validation');

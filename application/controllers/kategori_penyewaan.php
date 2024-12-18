@@ -8,6 +8,7 @@ class kategori_penyewaan extends CI_Controller
         parent::__construct();
         $this->load->model('Kat_penyewaan_model');
         // Memuat library form_validation
+        $this->load->model('Notifikasi_model');
         $this->load->library('form_validation');
         // Memuat library session
         $this->load->library('session');

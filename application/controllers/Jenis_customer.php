@@ -7,6 +7,7 @@ class Jenis_customer extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Jenis_customer_model');
+        $this->load->model('Notifikasi_model');
         $this->load->model('Kat_penyewaan_model');
         // Memuat library form_validation
         $this->load->library('form_validation');

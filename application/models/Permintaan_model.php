@@ -16,7 +16,8 @@ class Permintaan_model extends CI_Model
 
     public function create_data($data)
     {
-        return $this->db->insert('permintaan', $data);
+        $this->db->insert('permintaan', $data);
+        return $this->db->insert_id();
     }
 
     public function update_data($id, $data)

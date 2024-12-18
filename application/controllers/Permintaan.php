@@ -11,6 +11,7 @@ class Permintaan extends CI_Controller
         $this->load->model('Barang_model');
         $this->load->model('Customer_model');
         // Memuat library form_validation
+        $this->load->model('Notifikasi_model');
         $this->load->library('form_validation');
         // Memuat library session
         $this->load->library('session');
@@ -54,7 +55,17 @@ class Permintaan extends CI_Controller
                     'status' => 1,
                 ];
 
-                $this->Permintaan_model->create_data($dataToInsert);
+                $permintaan = $this->Permintaan_model->create_data($dataToInsert);
+
+                $dataNotif = [
+                    'id_permintaan' => $permintaan,
+                    'url' => "proses_permintaan/proses/" . $permintaan,
+                    'ket' => 'Ada permintaan dari customer ' . $customer['name'] . ' jumlah stok: ' . $item['stok'],
+                    'status' => 1,
+                    'tanggal' => date('Y-m-d'),
+                ];
+
+                $notif = $this->Notifikasi_model->create_data($dataNotif);
             }
 
 

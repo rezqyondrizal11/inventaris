@@ -14,7 +14,7 @@
 </head>
 <?php
 $datapenyewaan = $this->Kat_penyewaan_model->get_all_data(['name !=' => "Tidak Termasuk"]);
-
+$notif = $this->Notifikasi_model->get_all_data(['status' => 1])
 ?>
 
 <body id="page-top">
@@ -122,14 +122,15 @@ $datapenyewaan = $this->Kat_penyewaan_model->get_all_data(['name !=' => "Tidak T
                 </li>
                 <!-- Nav Item - Tables -->
                 <li class="nav-item active">
-                    <a class="nav-link" href="<?= base_url('proses_permintaan') ?>">
+                    <a class="nav-link d-flex align-items-center" href="<?= base_url('proses_permintaan') ?>">
                         <i class="fas fa-inbox"></i>
 
-
-
-
-                        <span>Permintaan</span></a>
+                        <span>Permintaan <span class="badge badge-danger mx-8">
+                                <?= count($notif) ?>
+                            </span></span>
+                    </a>
                 </li>
+
                 <li class="nav-item active">
                     <a class="nav-link" href="<?= base_url('pengembalian_barang') ?>">
                         <i class="fas fa-truck fa-flip-horizontal"></i>
@@ -172,7 +173,10 @@ $datapenyewaan = $this->Kat_penyewaan_model->get_all_data(['name !=' => "Tidak T
                 <li class="nav-item active">
                     <a class="nav-link" href="<?= base_url('permintaan') ?>">
                         <i class="fas fa-store"></i>
-                        <span>permintaan</span></a>
+                        <span>permintaan
+
+
+                        </span></a>
                 </li>
                 <!-- Nav Item - Tables -->
                 <li class="nav-item active">
@@ -247,6 +251,45 @@ $datapenyewaan = $this->Kat_penyewaan_model->get_all_data(['name !=' => "Tidak T
                         <i class="fa fa-bars"></i>
                     </button>
                     <ul class="navbar-nav ml-auto">
+                        <?php if ($this->session->userdata('role') == 'pegawai'):
+
+
+                        ?>
+                            <!-- Notifikasi -->
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-bell fa-fw"></i>
+                                    <!-- Counter untuk notifikasi -->
+                                    <span class="badge badge-danger badge-counter"><?= count($notif) ?>+</span>
+                                </a>
+                                <!-- Dropdown notifikasi -->
+                                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                                    <h6 class="dropdown-header">
+                                        Notifikasi Permintaan
+                                    </h6>
+                                    <?php foreach ($notif as $key => $value) { ?>
+                                        <a class="dropdown-item d-flex align-items-center" href="<?= site_url($value['url']) ?>">
+                                            <div class="mr-3">
+                                                <div class="icon-circle bg-primary">
+                                                    <i class="fas fa-file-alt text-white"></i>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="small text-gray-500">
+                                                    <?= date('d F, Y', strtotime($value['tanggal'])) ?>
+                                                </div>
+                                                <span class="font-weight-bold"><?= $value['ket'] ?></span>
+                                            </div>
+                                        </a>
+                                    <?php   } ?>
+
+
+
+                                    <a class="dropdown-item text-center small text-gray-500" href="<?= site_url('proses_permintaan/index/') ?>">Show All</a>
+                                </div>
+                            </li>
+                        <?php endif; ?>
+                        <!-- User Info -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $this->session->userdata('name') ?></span>
@@ -257,7 +300,6 @@ $datapenyewaan = $this->Kat_penyewaan_model->get_all_data(['name !=' => "Tidak T
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -267,6 +309,7 @@ $datapenyewaan = $this->Kat_penyewaan_model->get_all_data(['name !=' => "Tidak T
                         </li>
                     </ul>
                 </nav>
+
                 <!-- End of Topbar -->
 
                 <div class="container-fluid">

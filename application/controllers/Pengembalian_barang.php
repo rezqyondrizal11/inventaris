@@ -19,6 +19,7 @@ class Pengembalian_barang extends CI_Controller
         $this->load->model('Penjualan_model');
         $this->load->model('Supir_model');
         $this->load->model('Pengembalian_barang_model');
+        $this->load->model('Notifikasi_model');
 
         // Memuat library form_validation
         $this->load->library('form_validation');

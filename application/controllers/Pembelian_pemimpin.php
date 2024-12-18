@@ -15,6 +15,7 @@ class Pembelian_pemimpin extends CI_Controller
         $this->load->model('Supplier_model');
         $this->load->model('Kat_penyewaan_model');
         $this->load->model('penyewaan_model');
+        $this->load->model('Notifikasi_model');
 
         // Memuat library form_validation
         $this->load->library('form_validation');

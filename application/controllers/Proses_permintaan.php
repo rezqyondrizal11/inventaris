@@ -12,6 +12,7 @@ class Proses_permintaan extends CI_Controller
         $this->load->model('Customer_model');
         $this->load->model('Supir_model');
         $this->load->model('Kat_penyewaan_model');
+        $this->load->model('Notifikasi_model');
         $this->load->model('Pembelian_customer_model');
         // Memuat library form_validation
         $this->load->library('form_validation');
@@ -34,8 +35,21 @@ class Proses_permintaan extends CI_Controller
 
     public function proses($id)
     {
+
+
+        // Data untuk update penyewaan
+        $update_data = [
+
+            'status' => 0,
+        ];
+
+        $this->Notifikasi_model->update_data(['id_permintaan' => $id], $update_data);
+
         // Ambil data  berdasarkan ID
         $data['data'] = $this->Permintaan_model->get_data_by_id($id);
+
+
+
         $data['supir'] = $this->Supir_model->get_all_data();
         // Jika data tidak ditemukan, tampilkan halaman error atau redirect
         if (!$data['data']) {

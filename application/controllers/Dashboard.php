@@ -14,6 +14,7 @@ class Dashboard extends CI_Controller
         $this->load->model('Barang_model');
         $this->load->model('Supplier_model');
         $this->load->model('Pembelian_model');
+        $this->load->model('Notifikasi_model');
         $this->load->model('Permintaan_model');
         // Memeriksa apakah pengguna sudah login
         if (!$this->session->userdata('user_id')) {

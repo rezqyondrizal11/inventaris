@@ -12,8 +12,9 @@ class Pembelian_customer extends CI_Controller
         $this->load->model('penyewaan_model');
         $this->load->model('Customer_model');
         $this->load->model('Supir_model');
-
         $this->load->model('Pengembalian_barang_model');
+
+        $this->load->model('Notifikasi_model');
         $this->load->model('Pembelian_customer_model');
         // Memuat library form_validation
         $this->load->library('form_validation');
