@@ -2,6 +2,9 @@
 <div class="container-fluid">
     <h1 class="h3 mb-2 text-gray-800">Permintaan</h1>
     <a href="<?= site_url('permintaan/create') ?>" class="btn btn-primary mb-4">Add New Permintaan</a>
+    <!-- <a href="<?php // site_url('permintaan/print') 
+                    ?>" class="btn btn-secondary mb-4" target="_blank">Print</a> -->
+
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Permintaan List</h6>
@@ -16,7 +19,8 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
+                        <th>No Invoice</th>
                         <th>Nama Barang</th>
                         <th>Stok</th>
                         <th>Tanggal</th>
@@ -35,6 +39,8 @@
                     ?>
                         <tr>
                             <td><?= $no++ ?></td>
+                            <td><?= $d['no_invoice'] ?></td>
+
                             <td><?= $barangname ?></td>
                             <td><?= $d['stok'] ?></td>
                             <td><?= date('d-m-Y', strtotime($d['tanggal'])) ?></td>

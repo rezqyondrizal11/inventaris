@@ -23,8 +23,20 @@ class Permintaan extends CI_Controller
 
     public function index()
     {
-        $data['data'] = $this->Permintaan_model->get_all_data();
+        $customer = $this->Customer_model->get_data_by_iduser($this->session->userdata('user_id'));
+
+        $data['data'] = $this->Permintaan_model->get_all_data_by_customer($customer['id']);
         $this->load->view('permintaan/index', $data);
+    }
+    public function print()
+    {
+        $customer = $this->Customer_model->get_data_by_iduser($this->session->userdata('user_id'));
+        if (!$customer) {
+            show_error('Unauthorized access', 403);
+        }
+
+        $data['data'] = $this->Permintaan_model->get_all_data_by_customer($customer['id']);
+        $this->load->view('permintaan/print', $data);
     }
 
     public function create()
@@ -49,6 +61,7 @@ class Permintaan extends CI_Controller
 
                 $dataToInsert = [
                     'id_barang' => $item['id_barang'],
+                    'no_invoice' => $item['no_invoice'],
                     'id_customer' => $customer['id'],
                     'stok' => $item['stok'],
                     'tanggal' => date('Y-m-d'),

@@ -9,6 +9,10 @@
         <div class="card-body">
             <form method="post">
                 <div class="form-group">
+                    <label for="stok">Stok</label>
+                    <input type="text" class="form-control" value="<?= $permintaan['no_invoice'] ?>" disabled>
+                </div>
+                <div class="form-group">
                     <label for="id_barang">Nama Barang</label>
                     <select class="form-control" id="id_barang" name="id_barang" required>
                         <option value="" disabled selected>Pilih Salah Satu</option> <!-- Disabled option -->

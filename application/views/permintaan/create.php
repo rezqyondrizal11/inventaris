@@ -19,6 +19,11 @@
                 <div id="permintaan-container">
                     <div class="permintaan-item">
                         <div class="form-group">
+                            <label for="stok">No Invoice</label>
+                            <input type="text" class="form-control" name="permintaan[0][no_invoice]" required>
+                        </div>
+
+                        <div class="form-group">
                             <label for="id_barang">Nama Barang</label>
                             <select class="form-control" name="permintaan[0][id_barang]" required>
                                 <option value="" disabled selected>Pilih Salah Satu</option>

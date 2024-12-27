@@ -8,6 +8,10 @@ class Permintaan_model extends CI_Model
     {
         return $this->db->get('permintaan')->result_array();
     }
+    public function get_all_data_by_customer($id_customer)
+    {
+        return $this->db->get_where('permintaan', ['id_customer' => $id_customer])->result_array();
+    }
 
     public function get_data_by_id($id)
     {
