@@ -1,7 +1,7 @@
 <?php $this->load->view('layout/header'); ?>
 <div class="container-fluid">
     <h1 class="h3 mb-2 text-gray-800">Penyewaan (<?= $kategori['name'] ?>)</h1>
-    <a href="<?= site_url('penyewaan/create/' . $id) ?>" class="btn btn-primary mb-4">Add New Penyewaan</a>
+
     <a href="<?= site_url('penyewaan/print_pdf/' . $id . '?start_date=' . $this->input->get('start_date') . '&end_date=' . $this->input->get('end_date')) ?>" class="btn btn-danger mb-4" target="_blank">Print PDF</a>
     <a href="<?= site_url('penyewaan/export_excel/' . $id) ?>?start_date=<?= $this->input->get('start_date') ?>&end_date=<?= $this->input->get('end_date') ?>"
         class="btn btn-success mb-4">Export Excel</a>
