@@ -37,7 +37,7 @@ class kategori_penyewaan extends CI_Controller
 
                 $data = [
                     'name' => $this->input->post('name'),
-
+                    'status' => 1,
                 ];
 
                 $this->Kat_penyewaan_model->create_data($data);
@@ -92,7 +92,24 @@ class kategori_penyewaan extends CI_Controller
         // Load view
         $this->load->view('katpenyewaan/edit', $data);
     }
+    public function show($id)
+    {
+        // Ambil data  berdasarkan ID
+        $data['data'] = $this->Kat_penyewaan_model->get_data_by_id($id);
 
+        // Jika data user tidak ditemukan, tampilkan halaman error atau redirect
+        if (!$data['data']) {
+            show_404(); // Atau redirect('user') jika lebih cocok
+        }
+        // Siapkan data untuk pembaruan
+        $update_data = [
+            'status' => $data['data']['status'] == 1 ? 0 : 1,
+        ];
+
+        // Update 
+        $this->Kat_penyewaan_model->update_data($id, $update_data);
+        redirect('kategori_penyewaan');
+    }
     public function delete($id)
     {
         $this->Kat_penyewaan_model->delete_data($id);

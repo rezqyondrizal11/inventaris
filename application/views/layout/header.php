@@ -13,7 +13,7 @@
 
 </head>
 <?php
-$datapenyewaan = $this->Kat_penyewaan_model->get_all_data(['name !=' => "Tidak Termasuk"]);
+$datapenyewaan = $this->Kat_penyewaan_model->get_all_data(['name !=' => "Tidak Termasuk", 'status' => 1]);
 $notif = $this->Notifikasi_model->get_all_data(['status' => 1])
 ?>
 

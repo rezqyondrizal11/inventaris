@@ -18,7 +18,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -29,9 +29,11 @@
                         <tr>
                             <td><?= $no++ ?></td>
                             <td><?= $d['name'] ?></td>
+                            <td><?= $d['status'] == '1' ? 'Show' : 'No Show' ?></td>
 
 
                             <td>
+                                <a href="<?= site_url('kategori_penyewaan/show/' . $d['id']) ?>" class="btn btn-primary btn-sm">Show / No Show</a>
                                 <a href="<?= site_url('kategori_penyewaan/edit/' . $d['id']) ?>" class="btn btn-warning btn-sm">Edit</a>
                                 <a href="<?= site_url('kategori_penyewaan/delete/' . $d['id']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
                             </td>
