@@ -19,34 +19,99 @@
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Users</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">150</div>
+                    <a href="<?= base_url('penjualan_pemimpin') ?>">
+
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Penjualan</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $total_penjualan ?></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-box fa-2x text-gray-300"></i>
+                            </div>
                         </div>
-                        <div class="col-auto">
-                            <i class="fas fa-users fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
 
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
+            <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Revenue</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">$250,000</div>
+                    <a href="<?= base_url('pembelian_pemimpin') ?>">
+
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Pembelian</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $total_pembelian ?></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-box fa-2x text-gray-300"></i>
+                            </div>
                         </div>
-                        <div class="col-auto">
-                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <a href="<?= base_url('permintaan_pemimpin') ?>">
+
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Permintaan</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $total_permintaan ?></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-box fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <a href="<?= base_url('pengembalian_barang') ?>">
+
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Pengembalian</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $total_pengembalian ?></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-box fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <?php foreach ($katpenyewaan as $key => $p) {
+            $penyewaan = $this->penyewaan_model->get_all_data(['id_cat_sewa' => $p['id']]);
+        ?>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <a href="<?= base_url('penyewaan/index/' .  $p['id']) ?>">
+
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><?= $p['name'] ?></div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?= count($penyewaan) ?></div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-box fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <?php   } ?>
 
         <!-- Tambahkan lebih banyak statistik atau informasi lain sesuai kebutuhan -->
     </div>

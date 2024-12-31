@@ -211,7 +211,16 @@ $notif = $this->Notifikasi_model->get_all_data(['status' => 1])
                         <i class="fas fa-inbox"></i>
                         <span>Permintaan</span></a>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="<?= base_url('pengembalian_barang') ?>">
+                        <i class="fas fa-truck fa-flip-horizontal"></i>
 
+
+
+
+
+                        <span>Pengembalian</span></a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
                         aria-expanded="true" aria-controls="collapseOne">

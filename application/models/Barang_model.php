@@ -3,6 +3,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Barang_model extends CI_Model
 {
+    protected $table = 'barang'; // Nama tabel di database
+
+    public function count_all()
+    {
+        return $this->db->count_all($this->table);
+    }
     public function get_all_data($conditions = [])
     {
         // Check if there are conditions

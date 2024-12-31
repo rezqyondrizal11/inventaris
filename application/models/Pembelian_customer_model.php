@@ -3,6 +3,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Pembelian_customer_model extends CI_Model
 {
+    protected $table = 'pembelian_customer'; // Nama tabel di database
+
+    public function count_all_data_by_customer($id_customer)
+    {
+        $this->db->where('id_customer', $id_customer);
+        return $this->db->count_all_results('pembelian_customer');
+    }
+
     public function get_all_data($conditions = [])
     {
         // Check if there are conditions

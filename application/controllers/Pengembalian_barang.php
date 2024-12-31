@@ -26,7 +26,7 @@ class Pengembalian_barang extends CI_Controller
         // Memuat library session
         $this->load->library('session');
         // Memeriksa apakah pengguna sudah login
-        if ($this->session->userdata('role') != 'pegawai') {
+        if ($this->session->userdata('role') != 'pegawai' && $this->session->userdata('role') != 'pemimpin') {
             redirect('dashboard');  // Arahkan ke halaman login jika pengguna belum login
         }
     }

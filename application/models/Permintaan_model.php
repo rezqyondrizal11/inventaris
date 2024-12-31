@@ -3,7 +3,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Permintaan_model extends CI_Model
 {
+    protected $table = 'permintaan'; // Nama tabel di database
 
+    public function count_all_data_by_customer($id_customer)
+    {
+        $this->db->where('id_customer', $id_customer);
+        return $this->db->count_all_results('permintaan');
+    }
+
+
+    public function count_all()
+    {
+        return $this->db->count_all_results($this->table);
+    }
     public function get_all_data()
     {
         return $this->db->get('permintaan')->result_array();
