@@ -222,7 +222,7 @@ class Penyewaan extends CI_Controller
 
         if (!$data['penyewaan']) {
             $this->session->set_flashdata('error', 'Penyewaan not found!');
-            redirect('penyewaan');
+            redirect('dashboard');
         }
 
         if ($this->input->post()) {
@@ -241,7 +241,7 @@ class Penyewaan extends CI_Controller
 
                 $this->Penyewaan_model->update_data(['id' => $id], $update_data);
                 $this->session->set_flashdata('success', 'Penyewaan updated successfully!');
-                redirect('penyewaan/index/' . $id);
+                redirect('penyewaan/index/' . $data['penyewaan']['id_cat_sewa']);
             } else {
                 $data['errors'] = validation_errors();
             }

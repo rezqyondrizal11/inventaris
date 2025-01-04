@@ -95,6 +95,7 @@ class Permintaan extends CI_Controller
     {
         // Ambil data  berdasarkan ID
         $data['data'] = $this->Permintaan_model->get_data_by_id($id);
+        $data['barang'] = $this->Barang_model->get_all_data(['stok !=' => 0]);
 
         // Jika data tidak ditemukan, tampilkan halaman error atau redirect
         if (!$data['data']) {
@@ -107,15 +108,13 @@ class Permintaan extends CI_Controller
         if ($this->input->post()) {
             // Validasi input
             $this->form_validation->set_rules('id_barang', 'Barang', 'required|trim');
-            $this->form_validation->set_rules('id_customer', 'Customer', 'required|trim');
+
             $this->form_validation->set_rules('stok', 'Stok', 'required|trim');
 
             if ($this->form_validation->run()) {
                 // Siapkan data untuk pembaruan
                 $update_data = [
                     'id_barang' => $this->input->post('id_barang'),
-                    'id_customer' => $customer['id'],
-
                     'stok' => $this->input->post('stok'),
                     'tanggal' => date('Y-m-d'),
                     'status' => 1,

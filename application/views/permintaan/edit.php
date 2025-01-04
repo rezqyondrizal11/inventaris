@@ -9,21 +9,21 @@
         <div class="card-body">
             <form method="post">
                 <div class="form-group">
-                    <label for="stok">Stok</label>
-                    <input type="text" class="form-control" value="<?= $permintaan['no_invoice'] ?>" disabled>
+                    <label for="stok">No Invoice</label>
+                    <input type="text" class="form-control" value="<?= $data['no_invoice'] ?>" disabled>
                 </div>
                 <div class="form-group">
                     <label for="id_barang">Nama Barang</label>
                     <select class="form-control" id="id_barang" name="id_barang" required>
                         <option value="" disabled selected>Pilih Salah Satu</option> <!-- Disabled option -->
                         <?php foreach ($barang as $b): ?>
-                            <option value="<?= $b['id'] ?>" <?= $permintaan['id_barang'] == $b['id'] ?>><?= $b['name'] ?> - <?= $b['stok'] ?></option>
+                            <option value="<?= $b['id'] ?>" <?= $data['id_barang'] == $b['id'] ? 'selected' : '' ?>><?= $b['name'] ?> - <?= $b['stok'] ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="stok">Stok</label>
-                    <input type="number" class="form-control" id="stok" name="stok" value="<?= $permintaan['stok'] ?>" required>
+                    <input type="number" class="form-control" id="stok" name="stok" value="<?= $data['stok'] ?>" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>
