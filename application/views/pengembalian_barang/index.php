@@ -1,7 +1,7 @@
 <?php $this->load->view('layout/header'); ?>
 <div class="container-fluid">
     <h1 class="h3 mb-2 text-gray-800">Pengembalian Barang</h1>
-    <a href="<?= site_url('pengembalian_barang/create/') ?>" class="btn btn-primary mb-4">Add New Pengembalian</a>
+
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">

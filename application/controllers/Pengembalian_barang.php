@@ -129,74 +129,74 @@ class Pengembalian_barang extends CI_Controller
         $this->load->view('pengembalian_barang/proses', $data);
     }
 
-    public function create()
-    {
-        $data = [
-            'customer' => $this->Customer_model->get_all_data(),
-            'barang' => $this->Barang_model->get_all_data(['stok !=' => 0]),
-            'supir' => $this->Supir_model->get_all_data(),
+    // public function create()
+    // {
+    //     $data = [
+    //         'customer' => $this->Customer_model->get_all_data(),
+    //         'barang' => $this->Barang_model->get_all_data(['stok !=' => 0]),
+    //         'supir' => $this->Supir_model->get_all_data(),
 
-        ];
-
-
-
-        if ($this->input->post()) {
-            // Validasi input
-
-
-            $this->form_validation->set_rules('id_barang', 'Barang', 'required|trim');
-            $this->form_validation->set_rules('id_customer', 'Customer', 'required|trim');
-
-            $this->form_validation->set_rules('sisa', 'sisa', 'required|trim');
-            $this->form_validation->set_rules('stok_dikembalikan', 'Stok Dikembalikan', 'required|trim');
-
-            $this->form_validation->set_rules('status', 'status', 'required|trim');
-            $this->form_validation->set_rules('tanggal', 'Tanggal', 'required|trim');
-            $this->form_validation->set_rules('volume', 'Volume', 'required|trim');
-
-            $barang = $this->Barang_model->get_data_by_id($this->input->post('id_barang'));
-
-
-            if ($this->form_validation->run()) {
-
-                // Data untuk update pembelian
-                $update_data = [
-
-                    'tanggal' => $this->input->post('tanggal'),
-                    'id_barang' => $this->input->post('id_barang'),
-                    'id_customer' => $this->input->post('id_customer'),
-                    'sisa' => $this->input->post('sisa'),
-                    'stok_dikembalikan' => $this->input->post('stok_dikembalikan'),
-                    'status' => $this->input->post('status'),
-                    'volume' => $this->input->post('volume'),
-
-                ];
-
-                $this->Pengembalian_barang_model->create_data($update_data);
-                if ($update_data['status'] == 2) {
-
-                    $barang = $this->Barang_model->get_data_by_id($this->input->post('id_barang'));
-                    $barangmasuk = $this->input->post('stok_dikembalikan') + $barang['jumlah_masuk'];
-                    $stok_baru = $barang['jumlah_awal'] +  $barangmasuk - $barang['jumla_keluar'];
-
-                    $barang_update = [
-                        'stok' => $stok_baru,  // Update stok
-                        'jumlah_masuk' => $barangmasuk,  // Update jumlah_keluar jika perlu
-                    ];
-                    // Mengupdate data barang di database
-                    $conditions = ['id' => $barang['id']];
-                    $this->Barang_model->update_data($conditions, $barang_update);
-                }
+    //     ];
 
 
 
-                $this->session->set_flashdata('success', 'Pengembalian Create successfully!');
-                redirect('pengembalian_barang');
-            } else {
-                $data['errors'] = validation_errors();
-            }
-        }
+    //     if ($this->input->post()) {
+    //         // Validasi input
 
-        $this->load->view('pengembalian_barang/create', $data);
-    }
+
+    //         $this->form_validation->set_rules('id_barang', 'Barang', 'required|trim');
+    //         $this->form_validation->set_rules('id_customer', 'Customer', 'required|trim');
+
+    //         $this->form_validation->set_rules('sisa', 'sisa', 'required|trim');
+    //         $this->form_validation->set_rules('stok_dikembalikan', 'Stok Dikembalikan', 'required|trim');
+
+    //         $this->form_validation->set_rules('status', 'status', 'required|trim');
+    //         $this->form_validation->set_rules('tanggal', 'Tanggal', 'required|trim');
+    //         $this->form_validation->set_rules('volume', 'Volume', 'required|trim');
+
+    //         $barang = $this->Barang_model->get_data_by_id($this->input->post('id_barang'));
+
+
+    //         if ($this->form_validation->run()) {
+
+    //             // Data untuk update pembelian
+    //             $update_data = [
+
+    //                 'tanggal' => $this->input->post('tanggal'),
+    //                 'id_barang' => $this->input->post('id_barang'),
+    //                 'id_customer' => $this->input->post('id_customer'),
+    //                 'sisa' => $this->input->post('sisa'),
+    //                 'stok_dikembalikan' => $this->input->post('stok_dikembalikan'),
+    //                 'status' => $this->input->post('status'),
+    //                 'volume' => $this->input->post('volume'),
+
+    //             ];
+
+    //             $this->Pengembalian_barang_model->create_data($update_data);
+    //             if ($update_data['status'] == 2) {
+
+    //                 $barang = $this->Barang_model->get_data_by_id($this->input->post('id_barang'));
+    //                 $barangmasuk = $this->input->post('stok_dikembalikan') + $barang['jumlah_masuk'];
+    //                 $stok_baru = $barang['jumlah_awal'] +  $barangmasuk - $barang['jumla_keluar'];
+
+    //                 $barang_update = [
+    //                     'stok' => $stok_baru,  // Update stok
+    //                     'jumlah_masuk' => $barangmasuk,  // Update jumlah_keluar jika perlu
+    //                 ];
+    //                 // Mengupdate data barang di database
+    //                 $conditions = ['id' => $barang['id']];
+    //                 $this->Barang_model->update_data($conditions, $barang_update);
+    //             }
+
+
+
+    //             $this->session->set_flashdata('success', 'Pengembalian Create successfully!');
+    //             redirect('pengembalian_barang');
+    //         } else {
+    //             $data['errors'] = validation_errors();
+    //         }
+    //     }
+
+    //     $this->load->view('pengembalian_barang/create', $data);
+    // }
 }
