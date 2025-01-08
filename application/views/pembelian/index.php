@@ -39,6 +39,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>No Invoice</th>
                         <th>Nama Barang</th>
                         <th>Nama Supplier</th>
                         <th>Jumlah Awal</th>
@@ -61,6 +62,7 @@
                     ?>
                         <tr>
                             <td><?= $no++ ?></td>
+                            <td><?= htmlspecialchars($d['no_invoice'], ENT_QUOTES, 'UTF-8') ?></td>
 
                             <td><?= htmlspecialchars($barangname, ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= $suppliername ?></td>
