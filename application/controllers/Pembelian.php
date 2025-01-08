@@ -64,6 +64,8 @@ class Pembelian extends CI_Controller
                 $data = [
                     'id_barang' => $this->input->post('id_barang'),
                     'id_supplier' => $this->input->post('id_supplier'),
+                    'no_invoice' => $this->input->post('no_invoice'),
+
                     'jumlah_awal' =>  $barang['stok'],
                     'jumlah_masuk' =>  $this->input->post('jumlah_masuk'),
                     'jumlah_keluar' => 0,

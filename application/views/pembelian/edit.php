@@ -10,7 +10,10 @@ $this->load->view('layout/header'); ?>
         </div>
         <div class="card-body">
             <form method="post">
-
+                <div class="form-group">
+                    <label for="stok">No Invoice</label>
+                    <input type="text" class="form-control" value="<?= $pembelian['no_invoice'] ?>" disabled>
+                </div>
                 <div class="form-group">
                     <label for="id_kat_barang">Nama Barang</label>
                     <select class="form-control" id="id_barang" name="id_barang" required>

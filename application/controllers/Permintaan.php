@@ -46,8 +46,6 @@ class Permintaan extends CI_Controller
         if ($this->input->post()) {
             $permintaan = $this->input->post('permintaan');
 
-
-
             $customer = $this->Customer_model->get_data_by_iduser($this->session->userdata('user_id'));
 
             foreach ($permintaan as $item) {

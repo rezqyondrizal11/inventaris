@@ -16,7 +16,10 @@
         </div>
         <div class="card-body">
             <form method="post">
-
+                <div class="form-group">
+                    <label for="no_invoice">No Invoice</label>
+                    <input type="text" class="form-control" name="no_invoice" required>
+                </div>
                 <div class="form-group">
                     <label for="id_barang">Nama Barang</label>
                     <select class="form-control" id="id_barang" name="id_barang" required>
