@@ -47,10 +47,14 @@ class Permintaan extends CI_Controller
             $permintaan = $this->input->post('permintaan');
 
             $customer = $this->Customer_model->get_data_by_iduser($this->session->userdata('user_id'));
+            // Ambil elemen pertama dari no_invoice dari array pertama di $permintaan
+            $noInvoice = is_array($permintaan[0]['no_invoice']) ? $permintaan[0]['no_invoice'][0] : $permintaan[0]['no_invoice'];
+
 
             foreach ($permintaan as $item) {
                 $this->form_validation->set_rules("permintaan[{$item['id_barang']}][id_barang]", 'Barang', 'required|trim');
                 $this->form_validation->set_rules("permintaan[{$item['stok']}][stok]", 'Stok', 'required|trim|integer');
+
 
                 // if (!$this->form_validation->run()) {
                 //     $data['errors'] = validation_errors();
@@ -59,7 +63,7 @@ class Permintaan extends CI_Controller
 
                 $dataToInsert = [
                     'id_barang' => $item['id_barang'],
-                    'no_invoice' => $item['no_invoice'],
+                    'no_invoice' =>  $noInvoice,
                     'id_customer' => $customer['id'],
                     'stok' => $item['stok'],
                     'tanggal' => date('Y-m-d'),

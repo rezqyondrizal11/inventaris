@@ -18,7 +18,7 @@
             <form method="post">
                 <div class="form-group">
                     <label for="no_invoice">No Invoice</label>
-                    <input type="text" class="form-control" name="no_invoice" required>
+                    <input type="text" class="form-control" name="no_invoice" value="INV-<?= mt_rand(100, 999) ?>" required readonly>
                 </div>
                 <div class="form-group">
                     <label for="id_barang">Nama Barang</label>
