@@ -1,7 +1,9 @@
 <?php $this->load->view('layout/header'); ?>
 <div class="container-fluid">
     <h1 class="h3 mb-2 text-gray-800">Barang</h1>
-    <a href="<?= site_url('barang/create') ?>" class="btn btn-primary mb-4">Add New Barang</a>
+    <?php if ($this->session->userdata('role') == 'admin'): ?>
+        <a href="<?= site_url('barang/create') ?>" class="btn btn-primary mb-4">Add New Barang</a>
+    <?php endif; ?>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Barang List</h6>
@@ -27,7 +29,11 @@
                         <th>Jumlah Masuk</th>
                         <th>Jumlah Keluar</th>
                         <th>Stok</th>
-                        <th>Actions</th>
+                        <?php if ($this->session->userdata('role') == 'admin'): ?>
+
+                            <th>Actions</th>
+                        <?php endif; ?>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -54,10 +60,15 @@
                             <td><?= htmlspecialchars($d['jumlah_masuk'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= htmlspecialchars($d['jumlah_keluar'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= htmlspecialchars($d['stok'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td>
-                                <a href="<?= site_url('barang/edit/' . $d['id']) ?>" class="btn btn-warning btn-sm">Edit</a>
-                                <a href="<?= site_url('barang/delete/' . $d['id']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
-                            </td>
+
+                            <?php if ($this->session->userdata('role') == 'admin'): ?>
+
+                                <td>
+                                    <a href="<?= site_url('barang/edit/' . $d['id']) ?>" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="<?= site_url('barang/delete/' . $d['id']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+                                </td>
+                            <?php endif; ?>
+
                         </tr>
                     <?php endforeach; ?>
 

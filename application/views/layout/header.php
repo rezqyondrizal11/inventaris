@@ -104,6 +104,16 @@ $notif = $this->Notifikasi_model->get_all_data(['status' => 1])
             <?php if ($this->session->userdata('role') == 'pegawai'): ?>
                 <!-- Heading -->
                 <div class="sidebar-heading">
+                    Item
+                </div>
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="<?= base_url('barang') ?>">
+                        <i class="fas fa-fw fa-box"></i>
+                        <span>Barang</span></a>
+                </li>
+                <!-- Heading -->
+                <div class="sidebar-heading">
                     Transaksi
                 </div>
 

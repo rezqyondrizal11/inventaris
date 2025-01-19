@@ -17,7 +17,7 @@ class Barang extends CI_Controller
         // Memuat library session
         $this->load->library('session');
         // Memeriksa apakah pengguna sudah login
-        if ($this->session->userdata('role') != 'admin') {
+        if ($this->session->userdata('role') != 'admin' && $this->session->userdata('role') != 'pegawai') {
             redirect('dashboard');  // Arahkan ke halaman login jika pengguna belum login
         }
     }

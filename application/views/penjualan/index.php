@@ -43,9 +43,9 @@
                         <th>Nama Customer</th>
                         <th>Nama Supir</th>
                         <th>Jumlah Awal</th>
-                        <th>Jumlah Masuk</th>
+
                         <th>Jumlah Keluar</th>
-                        <th>Stok</th>
+                        <th>Sisa Stok</th>
                         <th>Tanggal Jual</th>
                         <th>Actions</th>
                     </tr>
@@ -71,7 +71,7 @@
                             <td><?= htmlspecialchars($supirname, ENT_QUOTES, 'UTF-8') ?></td>
 
                             <td><?= htmlspecialchars($d['jumlah_awal'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= htmlspecialchars($d['jumlah_masuk'], ENT_QUOTES, 'UTF-8') ?></td>
+
                             <td><?= htmlspecialchars($d['jumlah_keluar'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= htmlspecialchars($d['stok'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= date('d-M-Y', strtotime($d['tanggal'])) ?></td>
