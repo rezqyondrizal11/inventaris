@@ -49,49 +49,62 @@ class Pembelian extends CI_Controller
         $data['supplier'] = $this->Supplier_model->get_all_data();
 
         if ($this->input->post()) {
-            // Validasi input
-            $this->form_validation->set_rules('id_barang', 'Barang', 'required|trim');
-            $this->form_validation->set_rules('id_supplier', 'Supplier', 'required|trim');
-            $this->form_validation->set_rules('jumlah_masuk', 'Jumlah Masuk', 'required|trim');
-            $this->form_validation->set_rules('tanggal', 'Tanggal', 'required|trim');
-            $barang = $this->Barang_model->get_data_by_id($this->input->post('id_barang'));
+
+            $pembelian = $this->input->post('pembelian');
+            $noInvoice = is_array($pembelian[0]['no_invoice']) ? $pembelian[0]['no_invoice'][0] : $pembelian[0]['no_invoice'];
 
 
-            if ($this->form_validation->run()) {
-                $barangmasuk = $barang['jumlah_masuk'] + $this->input->post('jumlah_masuk');
-                $stok_baru = $barang['stok'] + $this->input->post('jumlah_masuk');
+            // Loop through the 'pembelian' array which contains multiple items
+            foreach ($pembelian as $key => $item) {
 
-                $data = [
-                    'id_barang' => $this->input->post('id_barang'),
-                    'id_supplier' => $this->input->post('id_supplier'),
-                    'no_invoice' => $this->input->post('no_invoice'),
+                // Validasi input untuk setiap item
+                $this->form_validation->set_rules("pembelian[{$key}][id_barang]", 'Barang', 'required|trim');
+                $this->form_validation->set_rules("pembelian[{$key}][id_supplier]", 'Supplier', 'required|trim');
+                $this->form_validation->set_rules("pembelian[{$key}][jumlah_masuk]", 'Jumlah Masuk', 'required|trim');
+                $this->form_validation->set_rules("pembelian[{$key}][tanggal]", 'Tanggal', 'required|trim');
 
-                    'jumlah_awal' =>  $barang['stok'],
-                    'jumlah_masuk' =>  $this->input->post('jumlah_masuk'),
-                    'jumlah_keluar' => 0,
-                    'stok' =>  $barang['stok'] + $this->input->post('jumlah_masuk'),
-                    'tanggal' => $this->input->post('tanggal'),
-                ];
+                // Ambil data barang berdasarkan id_barang
+                $barang = $this->Barang_model->get_data_by_id($item['id_barang']);
+                if ($this->form_validation->run()) {
+                    $barangmasuk = $barang['jumlah_masuk'] + $item['jumlah_masuk'];
+                    $stok_baru = $barang['stok'] + $item['jumlah_masuk'];
 
-                // Menyimpan data pembelian
-                $this->Pembelian_model->create_data($data);
 
-                // Update stok barang di tabel barang
-                $barang_update = [
-                    'stok' => $stok_baru,  // Update stok
-                    'jumlah_masuk' => $barangmasuk,  // Update jumlah_keluar jika perlu
-                ];
 
-                // Mengupdate data barang di database
-                $conditions = ['id' => $this->input->post('id_barang')];
-                $this->Barang_model->update_data($conditions, $barang_update);
+                    // Siapkan data untuk dimasukkan ke tabel pembelian
+                    $data = [
+                        'id_barang' => $item['id_barang'],
+                        'id_supplier' => $item['id_supplier'],
+                        'no_invoice' =>   $noInvoice,
+                        'jumlah_awal' => $barang['stok'],
+                        'jumlah_masuk' => $item['jumlah_masuk'],
+                        'jumlah_keluar' => 0,
+                        'stok' => $barang['stok'] + $item['jumlah_masuk'],
+                        'tanggal' => $item['tanggal'],
+                    ];
 
-                $this->session->set_flashdata('success', 'Pembelian created successfully!');
-                redirect('pembelian');
-            } else {
-                $data['errors'] = validation_errors();
+                    // Menyimpan data pembelian
+                    $this->Pembelian_model->create_data($data);
+
+                    // Update stok barang di tabel barang
+                    $barang_update = [
+                        'stok' => $stok_baru,
+                        'jumlah_masuk' => $barangmasuk,
+                    ];
+
+                    // Mengupdate data barang di database
+                    $conditions = ['id' => $item['id_barang']];
+                    $this->Barang_model->update_data($conditions, $barang_update);
+                } else {
+                    $data['errors'] = validation_errors();
+                }
             }
+
+            // Setelah loop selesai, set flashdata dan redirect
+            $this->session->set_flashdata('success', 'Pembelian created successfully!');
+            redirect('pembelian');
         }
+
 
         $this->load->view('pembelian/create', $data);
     }

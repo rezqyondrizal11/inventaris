@@ -51,15 +51,10 @@ class Permintaan extends CI_Controller
             $noInvoice = is_array($permintaan[0]['no_invoice']) ? $permintaan[0]['no_invoice'][0] : $permintaan[0]['no_invoice'];
 
 
-            foreach ($permintaan as $item) {
-                $this->form_validation->set_rules("permintaan[{$item['id_barang']}][id_barang]", 'Barang', 'required|trim');
-                $this->form_validation->set_rules("permintaan[{$item['stok']}][stok]", 'Stok', 'required|trim|integer');
+            foreach ($permintaan as $key => $item) {
+                $this->form_validation->set_rules("permintaan[{ $key }][id_barang]", 'Barang', 'required|trim');
+                $this->form_validation->set_rules("permintaan[{ $key }][stok]", 'Stok', 'required|trim|integer');
 
-
-                // if (!$this->form_validation->run()) {
-                //     $data['errors'] = validation_errors();
-                //     break;
-                // }
 
                 $dataToInsert = [
                     'id_barang' => $item['id_barang'],
