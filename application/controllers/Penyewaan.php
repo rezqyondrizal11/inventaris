@@ -215,39 +215,36 @@ class Penyewaan extends CI_Controller
     }
     public function selesai($id)
     {
-        $data = [
-
-            'penyewaan' => $this->Penyewaan_model->get_data_by_id($id),
-        ];
-
-        if (!$data['penyewaan']) {
+        $penyewaan = $this->Penyewaan_model->get_data_by_id($id);
+        if (!$penyewaan) {
             $this->session->set_flashdata('error', 'Penyewaan not found!');
             redirect('dashboard');
         }
 
         if ($this->input->post()) {
-            // Validasi input
             $this->form_validation->set_rules('tanggal_selesai', 'Tanggal', 'required|trim');
 
-            $barang = $this->Barang_model->get_data_by_id($this->input->post('id_barang'));
-
             if ($this->form_validation->run()) {
+                $barang = $this->Barang_model->get_data_by_id($penyewaan['id_barang']);
 
-                // Data untuk update penyewaan
-                $update_data = [
+                // Update penyewaan
+                $this->Penyewaan_model->update_data(['id' => $id], [
                     'tanggal_selesai' => $this->input->post('tanggal_selesai'),
                     'status' => 2,
-                ];
+                ]);
 
-                $this->Penyewaan_model->update_data(['id' => $id], $update_data);
+                // Update stok barang
+                $this->Barang_model->update_data(['id' => $barang['id']], [
+                    'stok' => $barang['stok'] + $penyewaan['jumlah_masuk'],
+                    'jumlah_masuk' => $barang['jumlah_masuk'] + $penyewaan['jumlah_masuk'],
+                ]);
+
                 $this->session->set_flashdata('success', 'Penyewaan updated successfully!');
-                redirect('penyewaan/index/' . $data['penyewaan']['id_cat_sewa']);
-            } else {
-                $data['errors'] = validation_errors();
+                redirect('penyewaan/index/' . $penyewaan['id_cat_sewa']);
             }
         }
 
-        $this->load->view('penyewaan/selesai', $data);
+        $this->load->view('penyewaan/selesai', compact('penyewaan'));
     }
 
     public function delete($id)
