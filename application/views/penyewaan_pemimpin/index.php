@@ -43,9 +43,9 @@
                         <th>Nama Customer</th>
                         <th>Nama Supir</th>
                         <th>Jumlah Awal</th>
-                        <th>Jumlah Masuk</th>
+
                         <th>Jumlah Keluar</th>
-                        <th>Stok</th>
+                        <th>Sisa Stok</th>
                         <th>Tanggal Sewa</th>
                         <th>Status</th>
                         <th>Tanggal Selesai</th>
@@ -69,11 +69,12 @@
                             <td><?= $no++ ?></td>
 
                             <td> <?= htmlspecialchars($barang['kode'], ENT_QUOTES, 'UTF-8') ?> / <?= htmlspecialchars($barangname, ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= htmlspecialchars($supirname, ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= htmlspecialchars($customername, ENT_QUOTES, 'UTF-8') ?></td>
 
+                            <td><?= htmlspecialchars($supirname, ENT_QUOTES, 'UTF-8') ?></td>
+
                             <td><?= htmlspecialchars($d['jumlah_awal'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= htmlspecialchars($d['jumlah_masuk'], ENT_QUOTES, 'UTF-8') ?></td>
+
                             <td><?= htmlspecialchars($d['jumlah_keluar'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= htmlspecialchars($d['stok'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= date('d-M-Y', strtotime($d['tanggal'])) ?></td>
