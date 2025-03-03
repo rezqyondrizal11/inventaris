@@ -31,6 +31,8 @@ class Barang_model extends CI_Model
 
     public function update_data($conditions, $data)
     {
+
+
         // Support dynamic conditions for update
         if (!empty($conditions)) {
             $this->db->where($conditions);

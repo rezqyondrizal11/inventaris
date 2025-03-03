@@ -235,8 +235,8 @@ class Penyewaan extends CI_Controller
 
                 // Update stok barang
                 $this->Barang_model->update_data(['id' => $barang['id']], [
-                    'stok' => $barang['stok'] + $penyewaan['jumlah_masuk'],
-                    'jumlah_masuk' => $barang['jumlah_masuk'] + $penyewaan['jumlah_masuk'],
+                    'stok' => $barang['stok'] + $penyewaan['jumlah_keluar'],
+                    'jumlah_masuk' => $barang['jumlah_masuk'] + $penyewaan['jumlah_keluar'],
                 ]);
 
                 $this->session->set_flashdata('success', 'Penyewaan updated successfully!');
