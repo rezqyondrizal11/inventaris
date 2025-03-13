@@ -253,10 +253,10 @@ class Pembelian extends CI_Controller
         $end_date = $this->input->get('end_date');
 
         if ($start_date && $end_date) {
-            $data = $this->Penjualan_model->get_filtered_data($start_date, $end_date);
-            $date_range = 'Periode_' . date('d-M-Y', strtotime($start_date)) . '_sampai_' . date('d-M-Y', strtotime($end_date));
+            $data = $this->Pembelian_model->get_filtered_data($start_date, $end_date);
+            $date_range = 'Periode_' . date('d-M-Y', strtotime($start_date)) . 'sampai' . date('d-M-Y', strtotime($end_date));
         } else {
-            $data = $this->Penjualan_model->get_all_data();
+            $data = $this->Pembelian_model->get_all_data();
             $date_range = 'Semua_Data';
         }
 
@@ -285,37 +285,42 @@ class Pembelian extends CI_Controller
 
         // Add Table Headers
         $sheet->setCellValue('A4', 'No');
-        $sheet->setCellValue('B4', 'Nama Barang');
-        $sheet->setCellValue('C4', 'Nama Supplier');
-        $sheet->setCellValue('D4', 'Jumlah Awal');
-        $sheet->setCellValue('E4', 'Jumlah Masuk');
-        $sheet->setCellValue('F4', 'Jumlah Keluar');
-        $sheet->setCellValue('G4', 'Stok');
-        $sheet->setCellValue('H4', 'Tanggal Jual');
+        $sheet->setCellValue('B4', 'No Invoice');
+        $sheet->setCellValue('C4', 'Nama Barang');
+        $sheet->setCellValue('D4', 'Nama Supplier');
+
+        $sheet->setCellValue('E4', 'Jumlah Awal');
+        $sheet->setCellValue('F4', 'Jumlah Masuk');
+        $sheet->setCellValue('G4', 'Jumlah Keluar');
+        $sheet->setCellValue('H4', 'Stok');
+        $sheet->setCellValue('I4', 'Tanggal Beli');
 
         // Fill Data
         $row = 5;
         $no = 1;
         foreach ($data as $d) {
+
+
             $barang = $this->Barang_model->get_data_by_id($d['id_barang']);
             $barangname = $barang ? $barang['name'] : 'Unknown';
             $supplier = $this->Supplier_model->get_data_by_id($d['id_supplier']);
-            $suppliername = $supplier ? $supir['nama'] : 'Unknown';
-
+            $suppliername = $supplier ? $supplier['nama'] : 'Unknown';
 
             $sheet->setCellValue('A' . $row, $no++);
-            $sheet->setCellValue('B' . $row, htmlspecialchars($barang['kode'], ENT_QUOTES, 'UTF-8') . ' / ' . htmlspecialchars($barangname, ENT_QUOTES, 'UTF-8'));
-            $sheet->setCellValue('C' . $row, htmlspecialchars($suppliername, ENT_QUOTES, 'UTF-8'));
-            $sheet->setCellValue('D' . $row, htmlspecialchars($d['jumlah_awal'], ENT_QUOTES, 'UTF-8'));
-            $sheet->setCellValue('E' . $row, htmlspecialchars($d['jumlah_masuk'], ENT_QUOTES, 'UTF-8'));
-            $sheet->setCellValue('F' . $row, htmlspecialchars($d['jumlah_keluar'], ENT_QUOTES, 'UTF-8'));
-            $sheet->setCellValue('G' . $row, htmlspecialchars($d['stok'], ENT_QUOTES, 'UTF-8'));
-            $sheet->setCellValue('H' . $row, date('d-M-Y', strtotime($d['tanggal'])));
+            $sheet->setCellValue('B' . $row, htmlspecialchars($d['no_invoice'], ENT_QUOTES, 'UTF-8'));
+
+            $sheet->setCellValue('C' . $row, htmlspecialchars($barangname, ENT_QUOTES, 'UTF-8') . ' / ' . htmlspecialchars($barangname, ENT_QUOTES, 'UTF-8'));
+            $sheet->setCellValue('D' . $row, htmlspecialchars($suppliername, ENT_QUOTES, 'UTF-8'));
+            $sheet->setCellValue('E' . $row, htmlspecialchars($d['jumlah_awal'], ENT_QUOTES, 'UTF-8'));
+            $sheet->setCellValue('F' . $row, htmlspecialchars($d['jumlah_masuk'], ENT_QUOTES, 'UTF-8'));
+            $sheet->setCellValue('G' . $row, htmlspecialchars($d['jumlah_keluar'], ENT_QUOTES, 'UTF-8'));
+            $sheet->setCellValue('H' . $row, htmlspecialchars($d['stok'], ENT_QUOTES, 'UTF-8'));
+            $sheet->setCellValue('I' . $row, date('d-M-Y', strtotime($d['tanggal'])));
             $row++;
         }
 
         // Set Auto Size for columns
-        foreach (range('A', 'H') as $col) {
+        foreach (range('A', 'I') as $col) {
             $sheet->getColumnDimension($col)->setAutoSize(true);
         }
 

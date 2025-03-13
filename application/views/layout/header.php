@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Inventaris</title>
-    <link href="<?= base_url('assets/css/sb-admin-2.min.css') ?>" rel="stylesheet">
+    <link href="<?= "base_url"('assets/css/sb-admin-2.min.css') ?>" rel="stylesheet">
     <script src="<?= base_url('assets/vendor/jquery/jquery.min.js') ?>"></script>
     <script src="<?= base_url('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
     <!-- Font Awesome -->
@@ -183,16 +183,13 @@ $notif = $this->Notifikasi_model->get_all_data(['status' => 1])
                 <li class="nav-item active">
                     <a class="nav-link" href="<?= base_url('permintaan') ?>">
                         <i class="fas fa-store"></i>
-                        <span>permintaan
-
-
-                        </span></a>
+                        <span>Permintaan</span></a>
                 </li>
                 <!-- Nav Item - Tables -->
                 <li class="nav-item active">
                     <a class="nav-link" href="<?= base_url('pembelian_customer') ?>">
                         <i class="fas fa-store"></i>
-                        <span>Pembelian</span></a>
+                        <span>Pengembalian</span></a>
                 </li>
             <?php endif; ?>
 

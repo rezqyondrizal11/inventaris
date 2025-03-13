@@ -1,6 +1,6 @@
 <?php $this->load->view('layout/header'); ?>
 <div class="container-fluid">
-    <h1 class="h3 mb-4 text-gray-800">Create New Kategori Barang</h1>
+    <h1 class="h3 mb-4 text-gray-800">Create New Jenis Customer</h1>
 
     <!-- Tampilkan pesan error jika validasi gagal -->
     <?php if (!empty($errors)): ?>
@@ -12,7 +12,7 @@
     <!-- Card -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Create Kategori Barang Form</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Create Jenis Customer Form</h6>
         </div>
         <div class="card-body">
             <form method="post">

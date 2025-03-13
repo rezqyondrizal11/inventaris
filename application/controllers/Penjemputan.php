@@ -138,7 +138,7 @@ class Penjemputan extends CI_Controller
             }
 
             if ($this->form_validation->run()) {
-                $stok = $data['penjemputan']['jumlah_awal'] - $jumlah_keluar_post;
+                $stok = $data['penjemputan']['jumlah_awal'] - $jumlah_masuk_post;
 
                 // Data untuk update penjemputan
                 $update_data = [
@@ -156,7 +156,7 @@ class Penjemputan extends CI_Controller
                 // Update stok barang
                 $barang_update = [
                     'stok' => $stok_baru,
-                    'jumlah_keluar' => $barangkeluar,
+                    'jumlah_keluar' => $barangmasuk,
                 ];
                 $this->Barang_model->update_data(['id' => $this->input->post('id_barang')], $barang_update);
 

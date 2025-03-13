@@ -1,10 +1,10 @@
 <?php $this->load->view('layout/header'); ?>
 <div class="container-fluid">
-    <h1 class="h3 mb-2 text-gray-800">Pembelian / Penyewaan Barang</h1>
+    <h1 class="h3 mb-2 text-gray-800">Pengembalian Barang</h1>
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Pembelian / Penyewaan Barang List</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Pengembalian Barang List</h6>
         </div>
         <div class="card-body">
             <?php if ($this->session->flashdata('success')): ?>
