@@ -40,7 +40,7 @@ $this->load->view('layout/header'); ?>
                 </div>
                 <div class="form-group">
                     <label for="jumlah_keluar">Stok Keluar</label>
-                    <input type="number" class="form-control" id="jumlah_keluar" name="jumlah_keluar" value="<?= $penjualan['jumlah_keluar'] ?>" required>
+                    <input type="number" min="1" class="form-control" id="jumlah_keluar" name="jumlah_keluar" value="<?= $penjualan['jumlah_keluar'] ?>" required>
                 </div>
                 <div class="form-group">
                     <label for="tanggal">Tanggal Jual</label>

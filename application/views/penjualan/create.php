@@ -46,7 +46,7 @@
                 </div>
                 <div class="form-group">
                     <label for="jumlah_keluar">Stok Keluar</label>
-                    <input type="number" class="form-control" id="jumlah_keluar" name="jumlah_keluar" value="<?= set_value('jumlah_keluar') ?>" required>
+                    <input type="number" class="form-control" min="1" id="jumlah_keluar" name="jumlah_keluar" value="<?= set_value('jumlah_keluar') ?>" required>
                 </div>
                 <div class="form-group">
                     <label for="tanggal">Tanggal Jual</label>

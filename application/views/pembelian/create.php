@@ -45,7 +45,7 @@
 
                         <div class="form-group">
                             <label for="jumlah_masuk">Stok Masuk</label>
-                            <input type="number" class="form-control" name="pembelian[0][jumlah_masuk]" required>
+                            <input type="number" class="form-control" min="1" name="pembelian[0][jumlah_masuk]" required>
                         </div>
 
                         <div class="form-group">
@@ -103,7 +103,7 @@
 
             <div class="form-group">
                 <label for="jumlah_masuk">Stok Masuk</label>
-                <input type="number" class="form-control" name="pembelian[${itemIndex}][jumlah_masuk]" required>
+                <input type="number" class="form-control" min="1" name="pembelian[${itemIndex}][jumlah_masuk]" required>
             </div>
 
             <div class="form-group">

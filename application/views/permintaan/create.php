@@ -34,7 +34,7 @@
 						</div>
 						<div class="form-group mb-4">
 							<label for="stok">Stok</label>
-							<input type="number" class="form-control" name="permintaan[0][stok]" required>
+							<input type="number" min="0" class="form-control" name="permintaan[0][stok]" required>
 						</div>
 
 					</div>
@@ -77,7 +77,7 @@
                 </div>
                 <div class="form-group">
                     <label for="stok">Stok</label>
-                    <input type="number" class="form-control" name="permintaan[${itemIndex}][stok]" required>
+                    <input type="number" min="0" class="form-control" name="permintaan[${itemIndex}][stok]" required>
                 </div>
                 <button type="button" class="btn btn-danger remove-item">Hapus</button>
             `;

@@ -35,7 +35,7 @@ $this->load->view('layout/header'); ?>
 
                 <div class="form-group">
                     <label for="jumlah_masuk">Stok Masuk</label>
-                    <input type="number" class="form-control" id="jumlah_masuk" name="jumlah_masuk" value="<?= $pembelian['jumlah_masuk'] ?>" required>
+                    <input type="number" class="form-control" min="1" id="jumlah_masuk" name="jumlah_masuk" value="<?= $pembelian['jumlah_masuk'] ?>" required>
                 </div>
                 <div class="form-group">
                     <label for="tanggal">Tanggal Pembelian</label>

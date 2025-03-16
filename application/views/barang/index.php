@@ -21,11 +21,11 @@
                         <th>ID</th>
                         <th>Code</th>
                         <th>Name</th>
-                        <th>Satuan</th>
+                        <th>Volume</th>
                         <th>kondisi</th>
                         <th>Kategori</th>
                         <th>Penyewaan</th>
-                        <th>Jumlah Awal</th>
+
                         <th>Jumlah Masuk</th>
                         <th>Jumlah Keluar</th>
                         <th>Stok</th>
@@ -56,7 +56,6 @@
                             <td><?= htmlspecialchars($kategori_name, ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= htmlspecialchars($kategori_p, ENT_QUOTES, 'UTF-8') ?></td>
 
-                            <td><?= htmlspecialchars($d['jumlah_awal'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= htmlspecialchars($d['jumlah_masuk'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= htmlspecialchars($d['jumlah_keluar'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= htmlspecialchars($d['stok'], ENT_QUOTES, 'UTF-8') ?></td>

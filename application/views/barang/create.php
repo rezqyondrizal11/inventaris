@@ -34,7 +34,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="satuan">Satuan</label>
+                    <label for="satuan">Volume</label>
                     <input type="text" class="form-control" id="satuan" name="satuan" value="<?= set_value('satuan') ?>" required>
                 </div>
                 <div class="form-group">
@@ -57,7 +57,7 @@
                 </div>
                 <div class="form-group">
                     <label for="stok">Stok</label>
-                    <input type="number" class="form-control" id="stok" name="stok" value="<?= set_value('stok') ?>" required>
+                    <input type="number" class="form-control" min="1" id="stok" name="stok" value="<?= set_value('stok') ?>" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Create</button>

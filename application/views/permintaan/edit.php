@@ -23,7 +23,7 @@
                 </div>
                 <div class="form-group">
                     <label for="stok">Stok</label>
-                    <input type="number" class="form-control" id="stok" name="stok" value="<?= $data['stok'] ?>" required>
+                    <input type="number" min="0" class="form-control" id="stok" name="stok" value="<?= $data['stok'] ?>" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>

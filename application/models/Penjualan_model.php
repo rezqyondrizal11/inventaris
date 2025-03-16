@@ -18,6 +18,34 @@ class Penjualan_model extends CI_Model
         $this->db->order_by('id', 'DESC');
         return $this->db->get('penjualan')->result_array();
     }
+    public function get_all_data_jc($id_jenis_customer = null, $start_date = null, $end_date = null)
+    {
+        $this->db->select('
+            penjualan.*, 
+            customer.nama AS customer_nama, 
+            barang.kode AS barang_kode, 
+            barang.name AS barang_nama, 
+            supir.nama AS supir_nama
+        ');
+        $this->db->from('penjualan');
+        $this->db->join('customer', 'customer.id = penjualan.id_customer', 'left');
+        $this->db->join('jenis_customer', 'jenis_customer.id = customer.id_jc', 'left');
+        $this->db->join('barang', 'barang.id = penjualan.id_barang', 'left');
+        $this->db->join('supir', 'supir.id = penjualan.id_supir', 'left');
+
+        if ($id_jenis_customer) {
+            $this->db->where('jenis_customer.id', $id_jenis_customer);
+        }
+
+        // Filter berdasarkan rentang tanggal
+        if (!empty($start_date) && !empty($end_date)) {
+            $this->db->where('penjualan.tanggal >=', $start_date);
+            $this->db->where('penjualan.tanggal <=', $end_date);
+        }
+        $this->db->order_by('penjualan.id', 'DESC');
+        return $this->db->get()->result_array();
+    }
+
     public function get_filtered_data($start_date, $end_date)
     {
         $this->db->where('tanggal >=', $start_date);

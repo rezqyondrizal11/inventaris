@@ -23,6 +23,10 @@ class Customer_model extends CI_Model
     {
         return $this->db->get_where('customer', ['id_user' => $id])->row_array();
     }
+    public function get_data_by_id_jc($id)
+    {
+        return $this->db->get_where('customer', ['id_jc' => $id])->row_array();
+    }
     public function create_data($data)
     {
         return $this->db->insert('customer', $data);

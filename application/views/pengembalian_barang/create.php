@@ -38,12 +38,12 @@
 
                 <div class="form-group">
                     <label for="stok_dikembalikan">Stok Dikembalikan</label>
-                    <input type="number" class="form-control" id="stok_dikembalikan" name="stok_dikembalikan" value="<?= set_value('stok_dikembalikan') ?>" required>
+                    <input type="number" class="form-control" min="1" id="stok_dikembalikan" name="stok_dikembalikan" value="<?= set_value('stok_dikembalikan') ?>" required>
                 </div>
 
                 <div class="form-group">
                     <label for="sisa">Sisa</label>
-                    <input type="number" class="form-control" id="sisa" name="sisa" value="<?= set_value('sisa') ?>" required>
+                    <input type="number" class="form-control" min="0" id="sisa" name="sisa" value="<?= set_value('sisa') ?>" required>
                 </div>
                 <div class="form-group">
                     <label for="volume">Volume</label>

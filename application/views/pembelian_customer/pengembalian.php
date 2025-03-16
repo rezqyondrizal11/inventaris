@@ -19,7 +19,7 @@
                 <form method="post">
                     <div class="form-group">
                         <label for="name">Stok Dikembalikan</label>
-                        <input type="number" max="<?= $pembelian['sisa'] ?>" class="form-control" id="jumlah_keluar" name="jumlah_keluar" value="<?= set_value('jumlah_keluar') ?>" required>
+                        <input type="number" max="<?= $pembelian['sisa'] ?>" min="1" class="form-control" id="jumlah_keluar" name="jumlah_keluar" value="<?= set_value('jumlah_keluar') ?>" required>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Proses</button>

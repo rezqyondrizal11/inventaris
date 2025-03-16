@@ -39,7 +39,7 @@
 
                 <div class="form-group">
                     <label for="jumlah_masuk">Stok</label>
-                    <input type="number" class="form-control" id="jumlah_masuk" name="jumlah_masuk" value="<?= set_value('jumlah_masuk') ?>" required>
+                    <input type="number" class="form-control" min="0" id="jumlah_masuk" name="jumlah_masuk" value="<?= set_value('jumlah_masuk') ?>" required>
                 </div>
                 <div class="form-group">
                     <label for="tanggal">Tanggal</label>

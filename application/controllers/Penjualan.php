@@ -12,6 +12,7 @@ class Penjualan extends CI_Controller
         parent::__construct();
         $this->load->model('Barang_model');
         $this->load->model('Customer_model');
+        $this->load->model('Jenis_customer_model');
         $this->load->model('Penjualan_model');
         $this->load->model('Supir_model');
         $this->load->model('Pembelian_customer_model');
@@ -32,14 +33,15 @@ class Penjualan extends CI_Controller
         $start_date = $this->input->get('start_date');
         $end_date = $this->input->get('end_date');
 
-        if ($start_date && $end_date) {
-            $data['data'] = $this->Penjualan_model->get_filtered_data($start_date, $end_date);
-        } else {
-            $data['data'] = $this->Penjualan_model->get_all_data();
-        }
+        $data = [
+            'jeniscustomer' => $this->Jenis_customer_model->get_all_data(),
+            'start_date' => $start_date,
+            'end_date' => $end_date
+        ];
 
         $this->load->view('penjualan/index', $data);
     }
+
     public function create()
     {
         $data = [];
@@ -238,16 +240,13 @@ class Penjualan extends CI_Controller
     {
         $start_date = $this->input->get('start_date');
         $end_date = $this->input->get('end_date');
+        $idjenis = $this->input->get('jenis');
 
-        if ($start_date && $end_date) {
-            $data['data'] = $this->Penjualan_model->get_filtered_data($start_date, $end_date);
-            $data['start_date'] = $start_date;
-            $data['end_date'] = $end_date;
-        } else {
-            $data['data'] = $this->Penjualan_model->get_all_data();
-            $data['start_date'] = null;
-            $data['end_date'] = null;
-        }
+        $data['start_date'] = $start_date;
+        $data['end_date'] = $end_date;
+        $data['jenis'] = $this->Jenis_customer_model->get_data_by_id($idjenis);
+        $data['penjualan'] = $this->Penjualan_model->get_all_data_jc($idjenis, $start_date, $end_date);
+
         // Load the mPDF library
         require_once APPPATH . '../vendor/autoload.php';
         $mpdf = new Mpdf();
@@ -265,24 +264,29 @@ class Penjualan extends CI_Controller
     {
         $start_date = $this->input->get('start_date');
         $end_date = $this->input->get('end_date');
+        $idjenis = $this->input->get('jenis');
 
+        // Penamaan file berdasarkan periode atau semua data
         if ($start_date && $end_date) {
-            $data = $this->Penjualan_model->get_filtered_data($start_date, $end_date);
             $date_range = 'Periode_' . date('d-M-Y', strtotime($start_date)) . '_sampai_' . date('d-M-Y', strtotime($end_date));
         } else {
-            $data = $this->Penjualan_model->get_all_data();
             $date_range = 'Semua_Data';
         }
+
+        // Ambil data jenis customer jika idjenis ada
+        $data['jenis'] = !empty($idjenis) ? $this->Jenis_customer_model->get_data_by_id($idjenis) : null;
+
+        // Ambil data penjualan dengan filter yang sesuai
+        $data['penjualan'] = $this->Penjualan_model->get_all_data_jc($idjenis, $start_date, $end_date);
 
         // Load PhpSpreadsheet
         require_once APPPATH . '../vendor/autoload.php';
 
-
-        // Create Spreadsheet object
+        // Buat objek Spreadsheet
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        // Set document properties
+        // Set properti dokumen
         $spreadsheet->getProperties()
             ->setCreator("Your Company")
             ->setLastModifiedBy("Your Company")
@@ -290,62 +294,63 @@ class Penjualan extends CI_Controller
             ->setSubject("Laporan Penjualan")
             ->setDescription("Laporan Penjualan");
 
-        // Add Header
-        $sheet->setCellValue('A1', 'Laporan Penjualan');
+        // Tambahkan header laporan
+        $jenisNama = $data['jenis']['name'] ?? 'Semua Jenis Customer';
+        $sheet->setCellValue('A1', 'Laporan Penjualan ' . $jenisNama);
         $sheet->setCellValue('A2', 'Tanggal: ' . ($start_date && $end_date ? "$start_date s/d $end_date" : "Semua Data"));
-        $sheet->mergeCells('A1:J1');
-        $sheet->mergeCells('A2:J2');
+        $sheet->mergeCells('A1:I1');
+        $sheet->mergeCells('A2:I2');
         $sheet->getStyle('A1:A2')->getFont()->setBold(true);
 
-        // Add Table Headers
-        $sheet->setCellValue('A4', 'No');
-        $sheet->setCellValue('B4', 'Nama Barang');
-        $sheet->setCellValue('C4', 'Nama Customer');
-        $sheet->setCellValue('D4', 'Nama Supir');
-        $sheet->setCellValue('E4', 'Jumlah Awal');
-        $sheet->setCellValue('F4', 'Jumlah Masuk');
-        $sheet->setCellValue('G4', 'Jumlah Keluar');
-        $sheet->setCellValue('H4', 'Stok');
-        $sheet->setCellValue('I4', 'Tanggal Jual');
+        // Tambahkan header tabel
+        $headers = [
+            'A4' => 'No',
+            'B4' => 'Nama Barang',
+            'C4' => 'Nama Customer',
+            'D4' => 'Nama Supir',
+            'E4' => 'Jumlah Awal',
+            'F4' => 'Jumlah Masuk',
+            'G4' => 'Jumlah Keluar',
+            'H4' => 'Stok',
+            'I4' => 'Tanggal Jual'
+        ];
 
-        // Fill Data
+        foreach ($headers as $cell => $text) {
+            $sheet->setCellValue($cell, $text);
+        }
+
+        // Tambahkan data ke dalam tabel
         $row = 5;
         $no = 1;
-        foreach ($data as $d) {
-            $barang = $this->Barang_model->get_data_by_id($d['id_barang']);
-            $barangname = $barang ? $barang['name'] : 'Unknown';
-            $supir = $this->Supir_model->get_data_by_id($d['id_supir']);
-            $supirname = $supir ? $supir['nama'] : 'Unknown';
-            $customer = $this->Customer_model->get_data_by_id($d['id_customer']);
-            $customername = $customer ? $customer['nama'] : 'Unknown';
-
+        foreach ($data['penjualan'] as $d) {
             $sheet->setCellValue('A' . $row, $no++);
-            $sheet->setCellValue('B' . $row, htmlspecialchars($barang['kode'], ENT_QUOTES, 'UTF-8') . ' / ' . htmlspecialchars($barangname, ENT_QUOTES, 'UTF-8'));
-            $sheet->setCellValue('C' . $row, htmlspecialchars($customername, ENT_QUOTES, 'UTF-8'));
-            $sheet->setCellValue('D' . $row, htmlspecialchars($supirname, ENT_QUOTES, 'UTF-8'));
-            $sheet->setCellValue('E' . $row, htmlspecialchars($d['jumlah_awal'], ENT_QUOTES, 'UTF-8'));
-            $sheet->setCellValue('F' . $row, htmlspecialchars($d['jumlah_masuk'], ENT_QUOTES, 'UTF-8'));
-            $sheet->setCellValue('G' . $row, htmlspecialchars($d['jumlah_keluar'], ENT_QUOTES, 'UTF-8'));
-            $sheet->setCellValue('H' . $row, htmlspecialchars($d['stok'], ENT_QUOTES, 'UTF-8'));
-            $sheet->setCellValue('I' . $row, date('d-M-Y', strtotime($d['tanggal'])));
+            $sheet->setCellValue('B' . $row, ($d['barang_kode'] ?? '') . ' / ' . ($d['barang_nama'] ?? 'Unknown'));
+            $sheet->setCellValue('C' . $row, $d['customer_nama'] ?? 'Unknown');
+            $sheet->setCellValue('D' . $row, $d['supir_nama'] ?? 'Unknown');
+            $sheet->setCellValue('E' . $row, $d['jumlah_awal'] ?? 0);
+            $sheet->setCellValue('F' . $row, $d['jumlah_masuk'] ?? 0);
+            $sheet->setCellValue('G' . $row, $d['jumlah_keluar'] ?? 0);
+            $sheet->setCellValue('H' . $row, $d['stok'] ?? 0);
+            $sheet->setCellValue('I' . $row, isset($d['tanggal']) ? date('d-M-Y', strtotime($d['tanggal'])) : '');
             $row++;
         }
 
-        // Set Auto Size for columns
+        // Set ukuran kolom agar menyesuaikan otomatis
         foreach (range('A', 'I') as $col) {
             $sheet->getColumnDimension($col)->setAutoSize(true);
         }
 
-        // Generate File
+        // Simpan file Excel
         $writer = new Xlsx($spreadsheet);
         $filename = "Laporan_Penjualan_{$date_range}.xlsx";
 
-        // Output File
+        // Output ke browser
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header("Content-Disposition: attachment;filename=\"$filename\"");
         header('Cache-Control: max-age=0');
         $writer->save('php://output');
     }
+
 
     private function update_related_data($id, $idbarang, $stok_awal_baru)
     {

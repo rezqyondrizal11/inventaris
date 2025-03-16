@@ -39,7 +39,7 @@
 </head>
 
 <body>
-    <h1>Laporan Penjualan</h1>
+    <h1>Laporan Penjualan <?= $jenis['name'] ?></h1>
     <?php if ($start_date && $end_date): ?>
         <h3>Periode: <?= date('d-M-Y', strtotime($start_date)) ?> s/d <?= date('d-M-Y', strtotime($end_date)) ?></h3>
     <?php else: ?>
@@ -53,35 +53,33 @@
                 <th>Nama Customer</th>
                 <th>Nama Supir</th>
                 <th>Jumlah Awal</th>
-                <th>Jumlah Masuk</th>
                 <th>Jumlah Keluar</th>
-                <th>Stok</th>
+                <th>Sisa Stok</th>
                 <th>Tanggal Jual</th>
+
             </tr>
         </thead>
         <tbody>
-            <?php
-            $no = 1;
-            foreach ($data as $d):
-                $barang = $this->Barang_model->get_data_by_id($d['id_barang']);
-                $barangname = $barang ? $barang['name'] : 'Unknown';
-                $supir = $this->Supir_model->get_data_by_id($d['id_supir']);
-                $supirname = $supir ? $supir['nama'] : 'Unknown';
-                $customer = $this->Customer_model->get_data_by_id($d['id_customer']);
-                $customername = $customer ? $customer['nama'] : 'Unknown';
-            ?>
+            <?php if ($penjualan) :
+                $no = 1;
+                foreach ($penjualan as $d) : ?>
+                    <tr>
+                        <td><?= $no++ ?></td>
+                        <td><?= htmlspecialchars($d['barang_kode'] ?? '') ?> / <?= htmlspecialchars($d['barang_nama'] ?? '') ?></td>
+                        <td><?= htmlspecialchars($d['customer_nama'] ?? 'Unknown') ?></td>
+                        <td><?= htmlspecialchars($d['supir_nama'] ?? 'Unknown') ?></td>
+                        <td><?= htmlspecialchars($d['jumlah_awal'] ?? 0) ?></td>
+                        <td><?= htmlspecialchars($d['jumlah_keluar'] ?? 0) ?></td>
+                        <td><?= htmlspecialchars($d['stok'] ?? 0) ?></td>
+                        <td><?= date('d-M-Y', strtotime($d['tanggal'] ?? '')) ?></td>
+
+                    </tr>
+                <?php endforeach;
+            else : ?>
                 <tr>
-                    <td><?= $no++ ?></td>
-                    <td><?= htmlspecialchars($barang['kode'], ENT_QUOTES, 'UTF-8') ?> / <?= htmlspecialchars($barangname, ENT_QUOTES, 'UTF-8') ?></td>
-                    <td><?= htmlspecialchars($supirname, ENT_QUOTES, 'UTF-8') ?></td>
-                    <td><?= htmlspecialchars($customername, ENT_QUOTES, 'UTF-8') ?></td>
-                    <td><?= htmlspecialchars($d['jumlah_awal'], ENT_QUOTES, 'UTF-8') ?></td>
-                    <td><?= htmlspecialchars($d['jumlah_masuk'], ENT_QUOTES, 'UTF-8') ?></td>
-                    <td><?= htmlspecialchars($d['jumlah_keluar'], ENT_QUOTES, 'UTF-8') ?></td>
-                    <td><?= htmlspecialchars($d['stok'], ENT_QUOTES, 'UTF-8') ?></td>
-                    <td><?= date('d-M-Y', strtotime($d['tanggal'])) ?></td>
+                    <td colspan="9" class="text-center">Tidak ada data</td>
                 </tr>
-            <?php endforeach; ?>
+            <?php endif; ?>
         </tbody>
     </table>
 
