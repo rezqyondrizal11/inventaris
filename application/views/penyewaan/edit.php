@@ -44,7 +44,7 @@ $this->load->view('layout/header'); ?>
                 </div>
                 <div class="form-group">
                     <label for="tanggal">Tanggal Jual</label>
-                    <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?= $penyewaan['tanggal'] ?>" required>
+                    <input type="date" min="<?= date('Y-m-d') ?>" class="form-control" id="tanggal" name="tanggal" value="<?= $penyewaan['tanggal'] ?>" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>

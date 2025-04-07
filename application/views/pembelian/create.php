@@ -50,7 +50,7 @@
 
                         <div class="form-group">
                             <label for="tanggal">Tanggal Beli</label>
-                            <input type="date" class="form-control" name="pembelian[0][tanggal]" required>
+                            <input type="date" min="<?= date('Y-m-d') ?>" class="form-control" name="pembelian[0][tanggal]" required>
                         </div>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
 
             <div class="form-group">
                 <label for="tanggal">Tanggal Beli</label>
-                <input type="date" class="form-control" name="pembelian[${itemIndex}][tanggal]" required>
+                <input type="date" min="<?= date('Y-m-d') ?>" class="form-control" name="pembelian[${itemIndex}][tanggal]" required>
             </div>
         `;
 

@@ -54,7 +54,7 @@ class Penyewaan extends CI_Controller
         if ($this->input->post()) {
             // Validasi input
             $this->form_validation->set_rules('id_barang', 'Barang', 'required|trim');
-            $this->form_validation->set_rules('id_supir', 'Supir', 'required|trim');
+            $this->form_validation->set_rules('id_supir', 'Supir', 'trim');
             $this->form_validation->set_rules('id_customer', 'Customer', 'required|trim');
             $this->form_validation->set_rules('jumlah_keluar', 'Jumlah Keluar', 'required|trim');
             $this->form_validation->set_rules('tanggal', 'Tanggal', 'required|trim');
@@ -146,7 +146,7 @@ class Penyewaan extends CI_Controller
         if ($this->input->post()) {
             // Validasi input
             $this->form_validation->set_rules('id_barang', 'Barang', 'required|trim');
-            $this->form_validation->set_rules('id_supir', 'Supir', 'required|trim');
+            $this->form_validation->set_rules('id_supir', 'Supir', 'trim');
             $this->form_validation->set_rules('id_customer', 'Customer', 'required|trim');
             $this->form_validation->set_rules('jumlah_keluar', 'Jumlah Keluar', 'required|trim');
             $this->form_validation->set_rules('tanggal', 'Tanggal', 'required|trim');

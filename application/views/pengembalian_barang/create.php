@@ -67,7 +67,7 @@
                 </div>
                 <div class="form-group">
                     <label for="tanggal">Tanggal</label>
-                    <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?= set_value('tanggal') ?>" required>
+                    <input type="date" min="<?= date('Y-m-d') ?>" class="form-control" id="tanggal" name="tanggal" value="<?= set_value('tanggal') ?>" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Proses</button>
             </form>

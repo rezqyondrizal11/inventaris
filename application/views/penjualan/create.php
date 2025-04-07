@@ -37,7 +37,7 @@
                 </div>
                 <div class="form-group">
                     <label for="id_supir">Nama Supir</label>
-                    <select class="form-control" id="id_supir" name="id_supir" required>
+                    <select class="form-control" id="id_supir" name="id_supir">
                         <option value="" disabled selected>Pilih Salah Satu</option> <!-- Disabled option -->
                         <?php foreach ($supir as $s): ?>
                             <option value="<?= $s['id'] ?>"><?= $s['nama'] ?> </option>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="form-group">
                     <label for="tanggal">Tanggal Jual</label>
-                    <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?= set_value('tanggal') ?>" required>
+                    <input type="date" min="<?= date('Y-m-d') ?>" class="form-control" id="tanggal" name="tanggal" value="<?= set_value('tanggal') ?>" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Create</button>
             </form>
