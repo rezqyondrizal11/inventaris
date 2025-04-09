@@ -13,7 +13,7 @@ $this->load->view('layout/header'); ?>
 
                 <div class="form-group">
                     <label for="tanggal_selesai">Tanggal Selesai</label>
-                    <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai" value="<?= $penyewaan['tanggal_selesai'] ?>" required>
+                    <input type="date" min="<?= date('Y-m-d') ?>" class="form-control" id="tanggal_selesai" name="tanggal_selesai" value="<?= $penyewaan['tanggal_selesai'] ?>" required>
                 </div>
                 <button type="submit" class="btn btn-primary">proses</button>
             </form>
