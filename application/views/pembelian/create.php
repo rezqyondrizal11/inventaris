@@ -17,7 +17,7 @@
         <div class="card-body">
             <form method="post" id="pembelianForm">
                 <div id="pembelian-container">
-                    <div class="pembelian-item">
+                    <div class="pembelian-item border rounded p-3 mb-3">
                         <div class="form-group">
                             <label for="no_invoice">No Invoice</label>
                             <input type="text" class="form-control" name="pembelian[0][no_invoice]" value="INV-<?= mt_rand(100, 999) ?>" required readonly>
@@ -52,6 +52,8 @@
                             <label for="tanggal">Tanggal Beli</label>
                             <input type="date" min="<?= date('Y-m-d') ?>" class="form-control" name="pembelian[0][tanggal]" required>
                         </div>
+
+                    
                     </div>
                 </div>
 
@@ -64,11 +66,10 @@
                     <button type="submit" class="btn btn-primary">Create</button>
                 </div>
             </form>
-
         </div>
-
     </div>
 </div>
+
 <script>
     let itemIndex = 1;
 
@@ -76,11 +77,9 @@
         const container = document.getElementById('pembelian-container');
 
         const newItem = document.createElement('div');
-        newItem.classList.add('pembelian-item');
+        newItem.classList.add('pembelian-item', 'border', 'rounded', 'p-3', 'mb-3');
 
         newItem.innerHTML = `
-      
-
             <div class="form-group">
                 <label for="id_barang">Nama Barang</label>
                 <select class="form-control" name="pembelian[${itemIndex}][id_barang]" required>
@@ -110,10 +109,21 @@
                 <label for="tanggal">Tanggal Beli</label>
                 <input type="date" min="<?= date('Y-m-d') ?>" class="form-control" name="pembelian[${itemIndex}][tanggal]" required>
             </div>
+
+            <div class="form-group text-right">
+                <button type="button" class="btn btn-danger remove-item">Hapus</button>
+            </div>
         `;
 
         container.appendChild(newItem);
         itemIndex++;
     });
+
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('remove-item')) {
+            e.target.closest('.pembelian-item').remove();
+        }
+    });
 </script>
+
 <?php $this->load->view('layout/footer'); ?>
