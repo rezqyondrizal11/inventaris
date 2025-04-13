@@ -8,7 +8,7 @@ class Permintaan extends CI_Controller
 		parent::__construct();
 		$this->load->model('Permintaan_model');
 		$this->load->model('Kat_penyewaan_model');
-		$this->load->model('Barang_model');
+		$this->load->model('Barang_model'); 
 		$this->load->model('Customer_model');
 		// Memuat library form_validation
 		$this->load->model('Notifikasi_model');

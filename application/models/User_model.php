@@ -5,7 +5,7 @@ class User_model extends CI_Model
 {
     protected $table = 'users'; // Nama tabel di database
 
-    public function get_all_users()
+    public function get_all_user()
     {
         return $this->db->get('users')->result_array();
     }

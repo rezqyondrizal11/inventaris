@@ -9,7 +9,6 @@ class Barang extends CI_Controller
         $this->load->model('Barang_model');
         $this->load->model('Kat_barang_model');
         $this->load->model('Kat_penyewaan_model');
-        $this->load->model('Kat_penyewaan_model');
         $this->load->model('Notifikasi_model');
 
         // Memuat library form_validation

@@ -13,6 +13,7 @@ class Login extends CI_Controller
 
     public function index()
     {
+
         // Cek apakah sudah login, jika sudah, redirect ke dashboard
         if ($this->session->userdata('user_id')) {
             redirect('dashboard');

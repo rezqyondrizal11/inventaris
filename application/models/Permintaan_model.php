@@ -11,7 +11,6 @@ class Permintaan_model extends CI_Model
         return $this->db->count_all_results('permintaan');
     }
 
-
     public function count_all()
     {
         return $this->db->count_all_results($this->table);

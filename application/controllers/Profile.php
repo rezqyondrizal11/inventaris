@@ -34,34 +34,35 @@ class Profile extends CI_Controller
     }
 
     // Halaman untuk update profil
-    public function edit()
-    {
-        // Ambil data dari form
-        $password = $this->input->post('password');
-        $password_confirm = $this->input->post('password_confirm');
-
-        // Validasi jika ada perubahan password dan pastikan konfirmasi password cocok
-        if (!empty($password)) {
-            if ($password !== $password_confirm) {
-                $this->session->set_flashdata('error', 'Password and Confirm Password do not match.');
-                redirect('profile'); // Redirect kembali ke halaman profile
-            }
-
-            // Hash password baru jika cocok
-            $password = password_hash($password, PASSWORD_DEFAULT);
-        }
-
-        // Lanjutkan update data pengguna (termasuk password jika ada perubahan)
-        $data = [
-            'name' => $this->input->post('name'),
-            'email' => $this->input->post('email'),
-            'password' => $password
-        ];
-
-        $this->User_model->update_user($this->session->userdata('user_id'), $data);
-
-        // Set flash message dan redirect
-        $this->session->set_flashdata('success', 'Profile updated successfully.');
-        redirect('profile');
-    }
+	public function edit()
+	{
+		// Ambil data dari form
+		$password = $this->input->post('password');
+		$password_confirm = $this->input->post('password_confirm');
+	
+		// Data awal tanpa password
+		$data = [
+			'name' => $this->input->post('name'),
+			'email' => $this->input->post('email')
+		];
+	
+		// Validasi dan proses password jika diisi
+		if (!empty($password)) {
+			if ($password !== $password_confirm) {
+				$this->session->set_flashdata('error', 'Password dan Konfirmasi Password tidak cocok.');
+				redirect('profile');
+			}
+	
+			// Hash dan tambahkan ke data jika password valid
+			$data['password'] = password_hash($password, PASSWORD_DEFAULT);
+		}
+	
+		// Update data
+		$this->User_model->update_user($this->session->userdata('user_id'), $data);
+	
+		// Flash message
+		$this->session->set_flashdata('success', 'Profil berhasil diperbarui.');
+		redirect('profile');
+	}
+	
 }
