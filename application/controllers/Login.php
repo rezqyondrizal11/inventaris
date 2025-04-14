@@ -55,4 +55,27 @@ class Login extends CI_Controller
         $this->session->sess_destroy(); // Hapus session
         redirect('login'); // Redirect ke halaman login
     }
+
+    public function forgot_password()
+    {
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+
+        if ($this->form_validation->run() === TRUE) {
+            $email = $this->input->post('email');
+            $user = $this->User_model->get_user_by_email($email);
+
+            if ($user) {
+                // Simulasi kirim link reset
+                // (Di aplikasi nyata, Anda akan generate token dan kirim email berisi link dengan token tsb)
+                $this->session->set_flashdata('success', 'Reset link telah dikirim ke email Anda.');
+            } else {
+                $this->session->set_flashdata('error', 'Email tidak ditemukan.');
+            }
+
+            redirect('login/forgot_password');
+        }
+
+        $this->load->view('auth/forgot_password');
+    }
+
 }

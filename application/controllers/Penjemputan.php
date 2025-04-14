@@ -29,7 +29,7 @@ class Penjemputan extends CI_Controller
     public function index($id)
     {
         $data = [
-            'id' =>  $id,
+            'id' => $id,
             'kategori' => $this->Kat_penyewaan_model->get_data_by_id($id),
         ];
         $start_date = $this->input->get('start_date');
@@ -65,10 +65,10 @@ class Penjemputan extends CI_Controller
                     'id_barang' => $this->input->post('id_barang'),
                     'id_customer' => $this->input->post('id_customer'),
                     'id_cat_sewa' => $id,
-                    'jumlah_awal' =>  $barang['stok'],
-                    'jumlah_masuk' =>  $this->input->post('jumlah_masuk'),
+                    'jumlah_awal' => $barang['stok'],
+                    'jumlah_masuk' => $this->input->post('jumlah_masuk'),
                     'jumlah_keluar' => 0,
-                    'stok' =>  $barang['stok'] + $this->input->post('jumlah_masuk'),
+                    'stok' => $barang['stok'] + $this->input->post('jumlah_masuk'),
                     'tanggal' => $this->input->post('tanggal'),
                 ];
 
@@ -98,7 +98,7 @@ class Penjemputan extends CI_Controller
     public function edit($id)
     {
         $data = [
-            'barang' =>  $this->Barang_model->get_all_data(['stok !=' => 0, 'id_penyewaan' => $id]),
+            'barang' => $this->Barang_model->get_all_data(['stok !=' => 0, 'id_penyewaan' => $id]),
             'customer' => $this->Customer_model->get_all_data(),
             'supir' => $this->Supir_model->get_all_data(),
             'penjemputan' => $this->Penjemputan_model->get_data_by_id($id),
@@ -184,16 +184,16 @@ class Penjemputan extends CI_Controller
 
         // Update stok barang
         $barang_update = [
-            'jumlah_masuk' =>  $masuk,
+            'jumlah_masuk' => $masuk,
             'stok' => $barang['jumlah_awal'] + $masuk - $barang['jumlah_akhir'],
         ];
 
-        $this->Barang_model->update_data(['id' =>  $penjemputan['id_barang']], $barang_update);
+        $this->Barang_model->update_data(['id' => $penjemputan['id_barang']], $barang_update);
 
         $related_data = $this->Penjemputan_model->get_data_after_id($id, $penjemputan['id_barang']);
         $awal = $penjemputan['jumlah_awal'];
         foreach ($related_data as $data) {
-            $jumlah_awal =  $awal;
+            $jumlah_awal = $awal;
             $stok_baru = $jumlah_awal + $data['jumlah_masuk'];
 
             $this->Penjemputan_model->update_data(
@@ -289,7 +289,7 @@ class Penjemputan extends CI_Controller
         // Fill Data
         $row = 5;
         $no = 1;
-
+        $total_stok = 0;
 
         foreach ($data['data'] as $d) {
             $barang = $this->Barang_model->get_data_by_id($d['id_barang']);
@@ -309,11 +309,13 @@ class Penjemputan extends CI_Controller
             $sheet->setCellValue('H' . $row, date('d-M-Y', strtotime($d['tanggal'])));
 
 
-
-
+            $total_stok += $d['stok'];
             $row++;
         }
-
+        // Add Total Row
+        $sheet->setCellValue('F' . $row, 'Total Stok');
+        $sheet->setCellValue('G' . $row, $total_stok);
+        $sheet->getStyle('F' . $row . ':H' . $row)->getFont()->setBold(true);
         // Set Auto Size for columns
         foreach (range('A', 'H') as $col) {
             $sheet->getColumnDimension($col)->setAutoSize(true);

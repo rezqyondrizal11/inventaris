@@ -29,7 +29,7 @@ class Penyewaan_pemimpin extends CI_Controller
     public function index($id)
     {
         $data = [
-            'id' =>  $id,
+            'id' => $id,
             'kategori' => $this->Kat_penyewaan_model->get_data_by_id($id),
         ];
         $start_date = $this->input->get('start_date');
@@ -126,6 +126,7 @@ class Penyewaan_pemimpin extends CI_Controller
         // Fill Data
         $row = 5;
         $no = 1;
+        $total_stok = 0;
         foreach ($data['data'] as $d) {
             $barang = $this->Barang_model->get_data_by_id($d['id_barang']);
             $barangname = $barang ? $barang['name'] : 'Unknown';
@@ -156,9 +157,14 @@ class Penyewaan_pemimpin extends CI_Controller
             $sheet->setCellValue('K' . $row, htmlspecialchars($tanggalselesai, ENT_QUOTES, 'UTF-8'));
 
 
-
+            $total_stok += $d['stok'];
             $row++;
         }
+
+        // Add Total Row
+        $sheet->setCellValue('G' . $row, 'Total Stok');
+        $sheet->setCellValue('H' . $row, $total_stok);
+        $sheet->getStyle('G' . $row . ':H' . $row)->getFont()->setBold(true);
 
         // Set Auto Size for columns
         foreach (range('A', 'K') as $col) {

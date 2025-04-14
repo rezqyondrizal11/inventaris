@@ -10,11 +10,13 @@
             <form method="post">
                 <div class="form-group">
                     <label for="kode"><strong>Kode</strong></label>
-                    <input type="text" name="kode" placeholder="Masukkan Kode" autocomplete="off" class="form-control" required value="<?= $barang['kode'] ?>" maxlength="8" readonly>
+                    <input type="text" name="kode" placeholder="Masukkan Kode" autocomplete="off" class="form-control"
+                        required value="<?= $barang['kode'] ?>" maxlength="8" readonly>
                 </div>
                 <div class="form-group">
                     <label for="nama">Nama</label>
-                    <input type="text" class="form-control" id="nama" name="name" value="<?= set_value('name', $barang['name']) ?>" required>
+                    <input type="text" class="form-control" id="nama" name="name"
+                        value="<?= set_value('name', $barang['name']) ?>" required>
                 </div>
                 <div class="form-group">
                     <label for="kondisi">Kondisi</label>
@@ -27,14 +29,17 @@
                 </div>
                 <div class="form-group">
                     <label for="satuan">Volume</label>
-                    <input type="text" class="form-control" id="satuan" name="satuan" value="<?= set_value('satuan', $barang['satuan']) ?>" required>
+                    <input type="number" class="form-control" id="satuan" name="satuan"
+                        value="<?= set_value('satuan', $barang['satuan']) ?>" required>
                 </div>
                 <div class="form-group">
                     <label for="id_kat_barang">Kategori Barang</label>
                     <select class="form-control" id="id_kat_barang" name="id_kat_barang" required>
                         <option value="" disabled selected>Pilih Salah Satu</option> <!-- Disabled option -->
                         <?php foreach ($kategori as $kat): ?>
-                            <option value="<?= $kat['id'] ?>" <?= $kat['id'] == $barang['id_kat_barang'] ? 'selected' : '' ?>><?= $kat['name'] ?></option>
+                        <option value="<?= $kat['id'] ?>"
+                            <?= $kat['id'] == $barang['id_kat_barang'] ? 'selected' : '' ?>>
+                            <?= $kat['name'] ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -43,14 +48,17 @@
                     <select class="form-control" id="id_penyewaan" name="id_penyewaan" required>
                         <option value="" disabled selected>Pilih Salah Satu</option> <!-- Disabled option -->
                         <?php foreach ($penyewaan as $pen): ?>
-                            <option value="<?= $pen['id'] ?>" <?= $pen['id'] == $barang['id_penyewaan'] ? 'selected' : '' ?>><?= $pen['name'] ?></option>
+                        <option value="<?= $pen['id'] ?>"
+                            <?= $pen['id'] == $barang['id_penyewaan'] ? 'selected' : '' ?>>
+                            <?= $pen['name'] ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="stok">Stok</label>
                     <input type="number" class="form-control" min="1" id="stok" name="stok"
-                        value="<?= htmlspecialchars(set_value('stok', $barang['stok'] ?? ''), ENT_QUOTES, 'UTF-8') ?>" required>
+                        value="<?= htmlspecialchars(set_value('stok', $barang['stok'] ?? ''), ENT_QUOTES, 'UTF-8') ?>"
+                        required>
 
                 </div>
 

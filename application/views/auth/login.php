@@ -34,19 +34,21 @@
                     </div>
                     <div class="card-body">
                         <?php if ($this->session->flashdata('error')): ?>
-                            <div class="alert alert-danger">
-                                <?= $this->session->flashdata('error'); ?>
-                            </div>
+                        <div class="alert alert-danger">
+                            <?= $this->session->flashdata('error'); ?>
+                        </div>
                         <?php endif; ?>
 
                         <form method="post" action="<?= base_url('login') ?>">
                             <div class="form-group">
                                 <label for="email">Email Address</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+                                <input type="email" class="form-control" id="email" name="email"
+                                    placeholder="Enter email" required>
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="Password" required>
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox">
@@ -56,6 +58,10 @@
                             </div>
                             <button type="submit" class="btn btn-primary btn-block">Login</button>
                         </form>
+                        <div class="text-center mt-3">
+                            <a class="small" href="<?= base_url('login/forgot_password') ?>">Forgot Password?</a>
+                        </div>
+
                     </div>
 
                 </div>

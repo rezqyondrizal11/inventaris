@@ -129,6 +129,7 @@ class Penjualan_pemimpin extends CI_Controller
         // Tambahkan data ke dalam tabel
         $row = 5;
         $no = 1;
+        $total_stok = 0;
         foreach ($data['penjualan'] as $d) {
             $sheet->setCellValue('A' . $row, $no++);
             $sheet->setCellValue('B' . $row, ($d['barang_kode'] ?? '') . ' / ' . ($d['barang_nama'] ?? 'Unknown'));
@@ -139,9 +140,14 @@ class Penjualan_pemimpin extends CI_Controller
             $sheet->setCellValue('G' . $row, $d['jumlah_keluar'] ?? 0);
             $sheet->setCellValue('H' . $row, $d['stok'] ?? 0);
             $sheet->setCellValue('I' . $row, isset($d['tanggal']) ? date('d-M-Y', strtotime($d['tanggal'])) : '');
+            $total_stok += $d['stok'];
             $row++;
         }
 
+        // Add Total Row
+        $sheet->setCellValue('G' . $row, 'Total Stok');
+        $sheet->setCellValue('H' . $row, $total_stok);
+        $sheet->getStyle('G' . $row . ':H' . $row)->getFont()->setBold(true);
         // Set ukuran kolom agar menyesuaikan otomatis
         foreach (range('A', 'I') as $col) {
             $sheet->getColumnDimension($col)->setAutoSize(true);

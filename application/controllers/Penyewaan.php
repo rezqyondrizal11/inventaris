@@ -30,7 +30,7 @@ class Penyewaan extends CI_Controller
 	public function index($id)
 	{
 		$data = [
-			'id' =>  $id,
+			'id' => $id,
 			'kategori' => $this->Kat_penyewaan_model->get_data_by_id($id),
 		];
 		$start_date = $this->input->get('start_date');
@@ -74,12 +74,12 @@ class Penyewaan extends CI_Controller
 					'id_barang' => $this->input->post('id_barang'),
 					'id_supir' => $this->input->post('id_supir'),
 					'id_customer' => $this->input->post('id_customer'),
-					'jumlah_awal' =>  $barang['stok'],
+					'jumlah_awal' => $barang['stok'],
 					'jumlah_masuk' => 0,
 					'status' => 1,
 					'id_cat_sewa' => $id,
 					'jumlah_keluar' => $this->input->post('jumlah_keluar'),
-					'stok' =>  $barang['stok'] - $this->input->post('jumlah_keluar'),
+					'stok' => $barang['stok'] - $this->input->post('jumlah_keluar'),
 					'tanggal' => $this->input->post('tanggal'),
 				];
 
@@ -91,7 +91,7 @@ class Penyewaan extends CI_Controller
 					'id_penyewaan' => $id_penyewaan, // Gunakan ID penjualan yang baru
 					'id_customer' => $this->input->post('id_customer'),
 					'jumlah_masuk' => $this->input->post('jumlah_keluar'),
-					'jumlah_keluar' =>  0,
+					'jumlah_keluar' => 0,
 					'sisa' => $this->input->post('jumlah_keluar'),
 					'status' => 1,
 				];
@@ -205,7 +205,7 @@ class Penyewaan extends CI_Controller
 				$this->update_related_data($id, $barang['id'], $stok);
 
 				$this->session->set_flashdata('success', 'Penyewaan updated successfully!');
-				redirect('penyewaan/index/' .  $data['penyewaan']['id_cat_sewa']);
+				redirect('penyewaan/index/' . $data['penyewaan']['id_cat_sewa']);
 			} else {
 				$data['errors'] = validation_errors();
 			}
@@ -255,15 +255,15 @@ class Penyewaan extends CI_Controller
 		$kat = $penyewaan['id_cat_sewa'];
 		// Update stok barang
 		$barang_update = [
-			'jumlah_keluar' =>  $keluar,
+			'jumlah_keluar' => $keluar,
 			'stok' => $barang['jumlah_awal'] + $barang['jumlah_masuk'] - $keluar,
 		];
-		$this->Barang_model->update_data(['id' =>  $penyewaan['id_barang']], $barang_update);
+		$this->Barang_model->update_data(['id' => $penyewaan['id_barang']], $barang_update);
 
 		$related_data = $this->Penyewaan_model->get_data_after_id($id, $penyewaan['id_barang']);
 		$awal = $penyewaan['jumlah_awal'];
 		foreach ($related_data as $data) {
-			$jumlah_awal =  $awal;
+			$jumlah_awal = $awal;
 			$stok_baru = $jumlah_awal - $data['jumlah_keluar'];
 
 			$this->Penyewaan_model->update_data(
@@ -360,6 +360,7 @@ class Penyewaan extends CI_Controller
 		// Fill Data
 		$row = 5;
 		$no = 1;
+		$total_stok = 0;
 		foreach ($data['data'] as $d) {
 			$barang = $this->Barang_model->get_data_by_id($d['id_barang']);
 			$barangname = $barang ? $barang['name'] : 'Unknown';
@@ -389,11 +390,14 @@ class Penyewaan extends CI_Controller
 			$sheet->setCellValue('J' . $row, htmlspecialchars($status, ENT_QUOTES, 'UTF-8'));
 			$sheet->setCellValue('K' . $row, htmlspecialchars($tanggalselesai, ENT_QUOTES, 'UTF-8'));
 
-
-
+			$total_stok += $d['stok'];
 			$row++;
 		}
 
+		// Add Total Row
+		$sheet->setCellValue('G' . $row, 'Total Stok');
+		$sheet->setCellValue('H' . $row, $total_stok);
+		$sheet->getStyle('G' . $row . ':H' . $row)->getFont()->setBold(true);
 		// Set Auto Size for columns
 		foreach (range('A', 'K') as $col) {
 			$sheet->getColumnDimension($col)->setAutoSize(true);

@@ -75,7 +75,7 @@ class Pembelian extends CI_Controller
                     $data = [
                         'id_barang' => $item['id_barang'],
                         'id_supplier' => $item['id_supplier'],
-                        'no_invoice' =>   $noInvoice,
+                        'no_invoice' => $noInvoice,
                         'jumlah_awal' => $barang['stok'],
                         'jumlah_masuk' => $item['jumlah_masuk'],
                         'jumlah_keluar' => 0,
@@ -197,16 +197,16 @@ class Pembelian extends CI_Controller
 
         // Update stok barang
         $barang_update = [
-            'jumlah_masuk' =>  $masuk,
+            'jumlah_masuk' => $masuk,
             'stok' => $barang['jumlah_awal'] + $masuk - $barang['jumlah_akhir'],
         ];
 
-        $this->Barang_model->update_data(['id' =>  $pembelian['id_barang']], $barang_update);
+        $this->Barang_model->update_data(['id' => $pembelian['id_barang']], $barang_update);
 
         $related_data = $this->Pembelian_model->get_data_after_id($id, $pembelian['id_barang']);
         $awal = $pembelian['jumlah_awal'];
         foreach ($related_data as $data) {
-            $jumlah_awal =  $awal;
+            $jumlah_awal = $awal;
             $stok_baru = $jumlah_awal + $data['jumlah_masuk'];
 
             $this->Pembelian_model->update_data(
@@ -298,6 +298,8 @@ class Pembelian extends CI_Controller
         // Fill Data
         $row = 5;
         $no = 1;
+        $total_stok = 0;
+
         foreach ($data as $d) {
 
 
@@ -316,8 +318,14 @@ class Pembelian extends CI_Controller
             $sheet->setCellValue('G' . $row, htmlspecialchars($d['jumlah_keluar'], ENT_QUOTES, 'UTF-8'));
             $sheet->setCellValue('H' . $row, htmlspecialchars($d['stok'], ENT_QUOTES, 'UTF-8'));
             $sheet->setCellValue('I' . $row, date('d-M-Y', strtotime($d['tanggal'])));
+            $total_stok += $d['stok'];
             $row++;
         }
+
+        // Add Total Row
+        $sheet->setCellValue('G' . $row, 'Total Stok');
+        $sheet->setCellValue('H' . $row, $total_stok);
+        $sheet->getStyle('G' . $row . ':H' . $row)->getFont()->setBold(true);
 
         // Set Auto Size for columns
         foreach (range('A', 'I') as $col) {

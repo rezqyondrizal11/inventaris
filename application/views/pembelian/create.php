@@ -4,9 +4,9 @@
 
     <!-- Tampilkan pesan error jika validasi gagal -->
     <?php if (!empty($errors)): ?>
-        <div class="alert alert-danger">
-            <?= $errors ?>
-        </div>
+    <div class="alert alert-danger">
+        <?= $errors ?>
+    </div>
     <?php endif; ?>
 
     <!-- Card -->
@@ -20,7 +20,8 @@
                     <div class="pembelian-item border rounded p-3 mb-3">
                         <div class="form-group">
                             <label for="no_invoice">No Invoice</label>
-                            <input type="text" class="form-control" name="pembelian[0][no_invoice]" value="INV-<?= mt_rand(100, 999) ?>" required readonly>
+                            <input type="text" class="form-control" name="pembelian[0][no_invoice]"
+                                value="INV-<?= mt_rand(100, 999) ?>" required readonly>
                         </div>
 
                         <div class="form-group">
@@ -28,7 +29,7 @@
                             <select class="form-control" name="pembelian[0][id_barang]" required>
                                 <option value="" disabled selected>Pilih Salah Satu</option>
                                 <?php foreach ($barang as $b): ?>
-                                    <option value="<?= $b['id'] ?>"><?= $b['name'] ?> - <?= $b['stok'] ?></option>
+                                <option value="<?= $b['id'] ?>"><?= $b['name'] ?> - <?= $b['stok'] ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -38,22 +39,23 @@
                             <select class="form-control" name="pembelian[0][id_supplier]" required>
                                 <option value="" disabled selected>Pilih Salah Satu</option>
                                 <?php foreach ($supplier as $s): ?>
-                                    <option value="<?= $s['id'] ?>"><?= $s['nama'] ?></option>
+                                <option value="<?= $s['id'] ?>"><?= $s['nama'] ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="jumlah_masuk">Stok Masuk</label>
-                            <input type="number" class="form-control" min="1" name="pembelian[0][jumlah_masuk]" required>
+                            <input type="number" class="form-control" min="1" name="pembelian[0][jumlah_masuk]"
+                                required>
                         </div>
 
                         <div class="form-group">
                             <label for="tanggal">Tanggal Beli</label>
-                            <input type="date" min="<?= date('Y-m-d') ?>" class="form-control" name="pembelian[0][tanggal]" required>
+                            <input type="date" class="form-control" name="pembelian[0][tanggal]" required>
                         </div>
 
-                    
+
                     </div>
                 </div>
 
@@ -71,15 +73,15 @@
 </div>
 
 <script>
-    let itemIndex = 1;
+let itemIndex = 1;
 
-    document.getElementById('addItem').addEventListener('click', function() {
-        const container = document.getElementById('pembelian-container');
+document.getElementById('addItem').addEventListener('click', function() {
+    const container = document.getElementById('pembelian-container');
 
-        const newItem = document.createElement('div');
-        newItem.classList.add('pembelian-item', 'border', 'rounded', 'p-3', 'mb-3');
+    const newItem = document.createElement('div');
+    newItem.classList.add('pembelian-item', 'border', 'rounded', 'p-3', 'mb-3');
 
-        newItem.innerHTML = `
+    newItem.innerHTML = `
             <div class="form-group">
                 <label for="id_barang">Nama Barang</label>
                 <select class="form-control" name="pembelian[${itemIndex}][id_barang]" required>
@@ -115,15 +117,15 @@
             </div>
         `;
 
-        container.appendChild(newItem);
-        itemIndex++;
-    });
+    container.appendChild(newItem);
+    itemIndex++;
+});
 
-    document.addEventListener('click', function(e) {
-        if (e.target && e.target.classList.contains('remove-item')) {
-            e.target.closest('.pembelian-item').remove();
-        }
-    });
+document.addEventListener('click', function(e) {
+    if (e.target && e.target.classList.contains('remove-item')) {
+        e.target.closest('.pembelian-item').remove();
+    }
+});
 </script>
 
 <?php $this->load->view('layout/footer'); ?>

@@ -4,9 +4,9 @@
 
     <!-- Tampilkan pesan error jika validasi gagal -->
     <?php if (!empty($errors)): ?>
-        <div class="alert alert-danger">
-            <?= $errors ?>
-        </div>
+    <div class="alert alert-danger">
+        <?= $errors ?>
+    </div>
     <?php endif; ?>
 
     <!-- Card -->
@@ -18,11 +18,13 @@
             <form method="post">
                 <div class="form-group">
                     <label for="kode"><strong>Kode</strong></label>
-                    <input type="text" name="kode" placeholder="Masukkan Kode" autocomplete="off" class="form-control" required value="BRG<?= mt_rand(100, 999) ?>" maxlength="8" readonly>
+                    <input type="text" name="kode" placeholder="Masukkan Kode" autocomplete="off" class="form-control"
+                        required value="BRG<?= mt_rand(100, 999) ?>" maxlength="8" readonly>
                 </div>
                 <div class="form-group">
                     <label for="nama">Nama</label>
-                    <input type="text" class="form-control" id="nama" name="name" value="<?= set_value('name') ?>" required>
+                    <input type="text" class="form-control" id="nama" name="name" value="<?= set_value('name') ?>"
+                        required>
                 </div>
                 <div class="form-group">
                     <label for="kondisi">Kondisi</label>
@@ -35,14 +37,15 @@
                 </div>
                 <div class="form-group">
                     <label for="satuan">Volume</label>
-                    <input type="text" class="form-control" id="satuan" name="satuan" value="<?= set_value('satuan') ?>" required>
+                    <input type="number" class="form-control" id="satuan" name="satuan"
+                        value="<?= set_value('satuan') ?>" required>
                 </div>
                 <div class="form-group">
                     <label for="id_kat_barang">Kategori Barang</label>
                     <select class="form-control" id="id_kat_barang" name="id_kat_barang" required>
                         <option value="" disabled selected>Pilih Salah Satu</option> <!-- Disabled option -->
                         <?php foreach ($kategori as $kat): ?>
-                            <option value="<?= $kat['id'] ?>"><?= $kat['name'] ?></option>
+                        <option value="<?= $kat['id'] ?>"><?= $kat['name'] ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -51,13 +54,14 @@
                     <select class="form-control" id="id_penyewaan" name="id_penyewaan" required>
                         <option value="" disabled selected>Pilih Salah Satu</option> <!-- Disabled option -->
                         <?php foreach ($penyewaan as $pen): ?>
-                            <option value="<?= $pen['id'] ?>"><?= $pen['name'] ?></option>
+                        <option value="<?= $pen['id'] ?>"><?= $pen['name'] ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="stok">Stok</label>
-                    <input type="number" class="form-control" min="1" id="stok" name="stok" value="<?= set_value('stok') ?>" required>
+                    <input type="number" class="form-control" min="1" id="stok" name="stok"
+                        value="<?= set_value('stok') ?>" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Create</button>

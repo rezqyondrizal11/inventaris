@@ -122,6 +122,8 @@ class Pembelian_pemimpin extends CI_Controller
         // Fill Data
         $row = 5;
         $no = 1;
+        $total_stok = 0;
+
         foreach ($data as $d) {
 
 
@@ -140,9 +142,14 @@ class Pembelian_pemimpin extends CI_Controller
             $sheet->setCellValue('G' . $row, htmlspecialchars($d['jumlah_keluar'], ENT_QUOTES, 'UTF-8'));
             $sheet->setCellValue('H' . $row, htmlspecialchars($d['stok'], ENT_QUOTES, 'UTF-8'));
             $sheet->setCellValue('I' . $row, date('d-M-Y', strtotime($d['tanggal'])));
+            $total_stok += $d['stok'];
             $row++;
         }
 
+        // Add Total Row
+        $sheet->setCellValue('G' . $row, 'Total Stok');
+        $sheet->setCellValue('H' . $row, $total_stok);
+        $sheet->getStyle('G' . $row . ':H' . $row)->getFont()->setBold(true);
         // Set Auto Size for columns
         foreach (range('A', 'I') as $col) {
             $sheet->getColumnDimension($col)->setAutoSize(true);

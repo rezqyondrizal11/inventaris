@@ -29,7 +29,7 @@ class Penjemputan_pemimpin extends CI_Controller
     public function index($id)
     {
         $data = [
-            'id' =>  $id,
+            'id' => $id,
             'kategori' => $this->Kat_penyewaan_model->get_data_by_id($id),
         ];
         $start_date = $this->input->get('start_date');
@@ -125,7 +125,7 @@ class Penjemputan_pemimpin extends CI_Controller
         // Fill Data
         $row = 5;
         $no = 1;
-
+        $total_stok = 0;
 
         foreach ($data['data'] as $d) {
             $barang = $this->Barang_model->get_data_by_id($d['id_barang']);
@@ -144,12 +144,13 @@ class Penjemputan_pemimpin extends CI_Controller
             $sheet->setCellValue('G' . $row, htmlspecialchars($d['stok'], ENT_QUOTES, 'UTF-8'));
             $sheet->setCellValue('H' . $row, date('d-M-Y', strtotime($d['tanggal'])));
 
-
-
-
+            $total_stok += $d['stok'];
             $row++;
         }
-
+        // Add Total Row
+        $sheet->setCellValue('F' . $row, 'Total Stok');
+        $sheet->setCellValue('G' . $row, $total_stok);
+        $sheet->getStyle('F' . $row . ':H' . $row)->getFont()->setBold(true);
         // Set Auto Size for columns
         foreach (range('A', 'H') as $col) {
             $sheet->getColumnDimension($col)->setAutoSize(true);

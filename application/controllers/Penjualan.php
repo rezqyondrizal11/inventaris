@@ -72,10 +72,10 @@ class Penjualan extends CI_Controller
                     'id_barang' => $this->input->post('id_barang'),
                     'id_supir' => $this->input->post('id_supir'),
                     'id_customer' => $this->input->post('id_customer'),
-                    'jumlah_awal' =>  $barang['stok'],
+                    'jumlah_awal' => $barang['stok'],
                     'jumlah_masuk' => 0,
                     'jumlah_keluar' => $this->input->post('jumlah_keluar'),
-                    'stok' =>  $barang['stok'] - $this->input->post('jumlah_keluar'),
+                    'stok' => $barang['stok'] - $this->input->post('jumlah_keluar'),
                     'tanggal' => $this->input->post('tanggal'),
                 ];
 
@@ -86,7 +86,7 @@ class Penjualan extends CI_Controller
                     'id_penjualan' => $id_penjualan, // Gunakan ID penjualan yang baru
                     'id_customer' => $this->input->post('id_customer'),
                     'jumlah_masuk' => $this->input->post('jumlah_keluar'),
-                    'jumlah_keluar' =>  0,
+                    'jumlah_keluar' => 0,
                     'sisa' => $this->input->post('jumlah_keluar'),
                     'status' => 1,
                 ];
@@ -211,10 +211,10 @@ class Penjualan extends CI_Controller
 
         // Update stok barang
         $barang_update = [
-            'jumlah_keluar' =>  $keluar,
+            'jumlah_keluar' => $keluar,
             'stok' => $barang['jumlah_awal'] + $barang['jumlah_masuk'] - $keluar,
         ];
-        $this->Barang_model->update_data(['id' =>  $penjualan['id_barang']], $barang_update);
+        $this->Barang_model->update_data(['id' => $penjualan['id_barang']], $barang_update);
 
 
 
@@ -222,7 +222,7 @@ class Penjualan extends CI_Controller
         $related_data = $this->Penjualan_model->get_data_after_id($id, $penjualan['id_barang']);
         $awal = $penjualan['jumlah_awal'];
         foreach ($related_data as $data) {
-            $jumlah_awal =  $awal;
+            $jumlah_awal = $awal;
             $stok_baru = $jumlah_awal - $data['jumlah_keluar'];
 
             $this->Penjualan_model->update_data(
@@ -322,6 +322,7 @@ class Penjualan extends CI_Controller
         // Tambahkan data ke dalam tabel
         $row = 5;
         $no = 1;
+        $total_stok = 0;
         foreach ($data['penjualan'] as $d) {
             $sheet->setCellValue('A' . $row, $no++);
             $sheet->setCellValue('B' . $row, ($d['barang_kode'] ?? '') . ' / ' . ($d['barang_nama'] ?? 'Unknown'));
@@ -332,8 +333,14 @@ class Penjualan extends CI_Controller
             $sheet->setCellValue('G' . $row, $d['jumlah_keluar'] ?? 0);
             $sheet->setCellValue('H' . $row, $d['stok'] ?? 0);
             $sheet->setCellValue('I' . $row, isset($d['tanggal']) ? date('d-M-Y', strtotime($d['tanggal'])) : '');
+            $total_stok += $d['stok'];
             $row++;
         }
+
+        // Add Total Row
+        $sheet->setCellValue('G' . $row, 'Total Stok');
+        $sheet->setCellValue('H' . $row, $total_stok);
+        $sheet->getStyle('G' . $row . ':H' . $row)->getFont()->setBold(true);
 
         // Set ukuran kolom agar menyesuaikan otomatis
         foreach (range('A', 'I') as $col) {
